@@ -15,5 +15,9 @@
         "postcss": "^8.4.31",
         "tailwindcss": "^3.1.0",
         "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^44.2.1",
+        "@ckeditor/ckeditor5-upload": "^44.2.1"
     }
 }
