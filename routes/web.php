@@ -39,5 +39,6 @@ Route::get('/admin', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
+Route::post('/save-location', [LocationController::class, 'store'])->name('save.location');
 
 require __DIR__.'/auth.php';
