@@ -1,13 +1,10 @@
 <?php
-
-use App\Http\Controllers\Admin\Place\CreatePlaceController;
-use App\Http\Controllers\Admin\Place\DeletePlaceController;
-use App\Http\Controllers\Admin\Place\EditPlaceController;
+use App\Http\Controllers\Admin\City\CreateCityController;
+use App\Http\Controllers\Admin\City\DeleteCityController;
+use App\Http\Controllers\Admin\City\EditCityController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CKEditorUploadController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\Place\IndexPlaceController;
-use App\Http\Controllers\Place\ShowPlaceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
@@ -16,44 +13,56 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Dashboard (requires auth)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Profile routes (authenticated users only)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// CKEditor file upload
 Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
 
-Route::get('/location/{id}', [ShowPlaceController::class, 'index'])->name('location.show');
+// Locations
+Route::prefix('location')->group(function () {
+    Route::get('/{id}', [LocationController::class, 'show'])->name('location.show');
+    Route::get('/locations/{city?}', [LocationController::class, 'showByCity'])->name('location.index');
+    Route::get('/create', [LocationController::class, 'create'])->name('location.create'); // Form page
+    Route::post('/create', [LocationController::class, 'store'])->name('location.store'); // Save to DB
+    Route::get('/edit/{id}', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page
+    Route::put('/edit/{id}', [LocationController::class, 'update'])->name('location.update'); // Save edits
+    Route::delete('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
+});
 
-Route::get('/locations/{city?}', [IndexPlaceController::class, 'index'])->name('location.index');
-
-Route::post('/location/create', [LocationController::class, 'store'])->name('location.save');
-
-Route::get('/location/edit/{id}', [EditPlaceController::class, 'index'])->name('location.edit');
-
-Route::get('/location/delete/{id}', [DeletePlaceController::class, 'index'])->name('location.delete');
-
-Route::post('/review/create', [ReviewController::class, 'store'])->name('review.save');
-
-Route::post('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
-
-Route::post('/review/delete/{id}', [ReviewController::class, 'delete'])->name('review.delete');
-
+// Cities
 Route::get('/cities', [CityController::class, 'index'])->name('city.index');
 
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
+// Reviews
+Route::prefix('review')->group(function () {
+    Route::post('/create', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('/edit/{id}', [ReviewController::class, 'editForm'])->name('review.edit.form'); // Form page
+    Route::put('/edit/{id}', [ReviewController::class, 'update'])->name('review.update');
+    Route::delete('/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');
+});
 
-Route::post('/admin/city/create', [CityController::class, 'store'])->name('city.save');
+// Admin panel routes
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
 
-Route::post('/admin/city/edit/{id}', [CityController::class, 'edit'])->name('city.edit');
-
-Route::post('/admin/city/delete/{id}', [CityController::class, 'delete'])->name('city.delete');
+    Route::prefix('city')->group(function () {
+        Route::get('/create', [CreateCityController::class, 'create'])->name('admin.city.create'); // Form page
+        Route::post('/create', [CreateCityController::class, 'store'])->name('admin.city.store'); // Save new city
+        Route::get('/edit/{id}', [EditCityController::class, 'editForm'])->name('admin.city.edit.form'); // Form page
+        Route::put('/edit/{id}', [EditCityController::class, 'update'])->name('admin.city.update'); // Save edits
+        Route::delete('/delete/{id}', [DeleteCityController::class, 'destroy'])->name('admin.city.delete');
+    });
+});
 
 require __DIR__.'/auth.php';
