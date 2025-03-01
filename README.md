@@ -35,7 +35,7 @@ to enter the php container in docker
 docker-compose exec laravel.test sh
 ```
 
-to run project after setup (and dont forget to change about docker -_-)
+to run project after setup (and dont forget to run ./vendor/bin/sail up -d -_-)
 
 ```
 ./vendor/bin/sail npm run dev
