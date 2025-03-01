@@ -19,6 +19,7 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^44.2.1",
         "@ckeditor/ckeditor5-upload": "^44.2.1",
+        "flowbite": "^3.1.2",
         "leaflet": "^1.9.4"
     }
 }
