@@ -4,14 +4,13 @@ use App\Http\Controllers\Admin\City\DeleteCityController;
 use App\Http\Controllers\Admin\City\EditCityController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CKEditorUploadController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'upload'])->name('home');
 
 // Dashboard (requires auth)
 Route::get('/dashboard', function () {
@@ -39,9 +38,8 @@ Route::prefix('location')->group(function () {
     Route::delete('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
 });
 
-
 // Cities
-Route::get('/region', [CityController::class, 'index'])->name('city.index');
+Route::get('/regions', [CityController::class, 'index'])->name('city.index');
 
 // Reviews
 Route::prefix('review')->group(function () {
