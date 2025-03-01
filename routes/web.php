@@ -10,7 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'upload'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Dashboard (requires auth)
 Route::get('/dashboard', function () {
