@@ -10,8 +10,8 @@ use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 // Dashboard (requires auth)
 Route::get('/dashboard', function () {
@@ -39,8 +39,9 @@ Route::prefix('location')->group(function () {
     Route::delete('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
 });
 
+
 // Cities
-Route::get('/cities', [CityController::class, 'index'])->name('city.index');
+Route::get('/region', [CityController::class, 'index'])->name('city.index');
 
 // Reviews
 Route::prefix('review')->group(function () {
