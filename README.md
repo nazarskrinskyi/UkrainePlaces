@@ -19,8 +19,27 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+add ssh in github|gitlab
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cat ~/.ssh/id_ed25519.pub
+```
+
 ```
 ./vendor/bin/sail up -d
+
+if error 
+
+docker-compose up -d
+```
+
+if error and you dont have vendor dir use 
+
+```
+sudo add-apt-repository ppa:ondrej/php
+sudo apt install php8.4 php8.4-cli php8.4-fpm php8.4-mbstring php8.4-xml php8.4-mysql php8.4-curl php8.4-zip php8.4-bcmath
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
 ```
 
 next 
