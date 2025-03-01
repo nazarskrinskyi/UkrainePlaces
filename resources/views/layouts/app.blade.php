@@ -123,9 +123,8 @@
             </div>
         </div>
 
-        <!-- Load CKEditor Script -->
         <script src="https://cdn.ckeditor.com/ckeditor5/44.2.1/ckeditor5.umd.js" crossorigin></script>
-    </main> -->
+    </main>  -->
 </div>
 </body>
 </html>
