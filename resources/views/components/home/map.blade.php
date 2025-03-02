@@ -136,6 +136,10 @@
     transition: all 0.3s;
   }
 
+  .region-active {
+    fill: #c2dbfd !important;
+  }
+
   .region:hover {
     fill: #aaa;
     transform: translateY(-5px) translateX(5px);
