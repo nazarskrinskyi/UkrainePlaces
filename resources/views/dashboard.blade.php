@@ -13,6 +13,6 @@
                 </div>
             </div>
         </div>
-        <x-map /> 
+        <x-home.map />
     </div>
 </x-app-layout>
