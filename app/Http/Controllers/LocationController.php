@@ -47,13 +47,13 @@ class LocationController extends Controller
 
     public function create(): View
     {
-        return view('location.create');
+        return view('location.form');
     }
 
     public function editForm($id): View
     {
         $location = Location::findOrFail($id);
-        return view('location.edit', compact('location'));
+        return view('location.form', compact('location'));
     }
 
     public function update(Request $request, $id): RedirectResponse

@@ -14,7 +14,7 @@ class EditCityController
     public function editForm($id): View
     {
         $city = City::findOrFail($id);
-        return view('admin.city.edit', compact('city'));
+        return view('admin.city.form', compact('city'));
     }
 
     public function update(Request $request, $id): RedirectResponse

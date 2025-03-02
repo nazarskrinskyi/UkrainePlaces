@@ -14,7 +14,7 @@ class ReviewController extends Controller
     {
         $validated = $request->validate([
             'location_id' => 'required|exists:locations,id',
-            'rating' => 'required|integer|min:1|max:5',
+            'rating' => 'required|decimal|min:0|max:5',
             'comment' => 'nullable|string',
         ]);
 
@@ -33,7 +33,7 @@ class ReviewController extends Controller
     {
         $request->validate([
             'content' => 'required|string',
-            'rating' => 'required|integer|min:1|max:5',
+            'rating' => 'required|decimal|min:0|max:5',
         ]);
 
         $review = Review::findOrFail($id);

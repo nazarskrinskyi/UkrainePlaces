@@ -11,24 +11,21 @@
 
 
         <!-- Map -->
-        <x-home.map />
+        <x-home.map :regions="$regions"/>
 
         <!-- Popular Locations -->
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 self-start mb-4 pt-4">Найбільш популярні</h2>
         <div class="flex gap-6 justify-between">
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="USA" rating="0" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="United Kingdom" rating="4.5" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="Ukraine" rating="5" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="Ukraine" rating="5" />
+            @foreach($topRatedLocations as $location)
+                <x-location-card :image="asset('uploads/' . $location->image_path)" :title="$location->name" :rating="str_replace('0', '', $location->avg_rating)" />
+            @endforeach
         </div>
-
         <!-- Recently Added Locations -->
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 self-start mb-4 pt-4">Нові</h2>
         <div class="flex gap-6 justify-between">
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="USA" rating="0" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="United Kingdom" rating="4.5" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="Ukraine" rating="5" />
-            <x-location-card :image="asset('assets/img/ua-banner.jpg')" title="Ukraine" rating="5" />
+            @foreach($latestLocations as $location)
+                <x-location-card :image="asset('uploads/' . $location->image_path)" :title="$location->name" :rating="str_replace('0', '', $location->avg_rating)" />
+            @endforeach
         </div>
     </div>
 </x-app-layout>

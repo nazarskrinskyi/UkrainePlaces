@@ -30,7 +30,7 @@ Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->na
 // Locations
 Route::prefix('location')->group(function () {
     Route::get('/{id}', [LocationController::class, 'show'])->name('location.show');
-    Route::get('/locations/{city?}', [LocationController::class, 'showByCity'])->name('location.index');
+    Route::get('/{city?}', [LocationController::class, 'showByCity'])->name('location.index');
     Route::get('/create', [LocationController::class, 'create'])->name('location.create'); // Form page
     Route::post('/create', [LocationController::class, 'store'])->name('location.store'); // Save to DB
     Route::get('/edit/{id}', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page

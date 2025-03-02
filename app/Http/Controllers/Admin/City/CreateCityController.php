@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\City;
 
 use App\Models\City;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,10 +13,10 @@ class CreateCityController
 {
     public function create(): View
     {
-        return view('admin.city.create');
+        return view('admin.city.form');
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:cities,name',
@@ -27,6 +27,6 @@ class CreateCityController
 
         $city = City::create($validated);
 
-        return response()->json(['message' => 'City created successfully', 'city' => $city], 201);
+        return redirect()->route('admin.city.edit.form', ['id' => $city->id]);
     }
 }

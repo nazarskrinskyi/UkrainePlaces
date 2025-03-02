@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class City extends Model
 {
-    protected $fillable = ['name', 'code', 'map_coordinates'];
+    protected $fillable = ['name', 'code', 'coordinates'];
 
     public function locations(): HasMany
     {
