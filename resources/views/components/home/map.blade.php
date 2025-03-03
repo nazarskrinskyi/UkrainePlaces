@@ -5,12 +5,11 @@
     xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="22.138577 52.380834 40.220623 44.387017" width="612.47321"
     height="408.0199">
     @foreach($regions as $region)
-          <path class="region"
-                d="{{ $region->coordinates }}"
-                title="{{ $region->code }}" data-name="{{ $region->name }}" id="{{ $region->id }}" />
-    @endforeach
+    <path class="region" d="{{ $region->coordinates }}" title="{{ $region->code }}" data-name="{{ $region->name }}"
+      id="{{ $region->id }}" />
+  @endforeach
   </svg>
-  <p class="font-bold mt-4 text-center text-lg text-white" id="region-name"></p>
+  <p class="font-bold mt-4 text-center text-lg text-gray-800 dark:text-gray-200" id="region-name"></p>
 </div>
 
 <script>
