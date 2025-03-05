@@ -22,8 +22,7 @@ class EditCityController
         $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'nullable|string',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
+            'coordinates' => 'nullable|string',
         ]);
 
         $city = City::findOrFail($id);

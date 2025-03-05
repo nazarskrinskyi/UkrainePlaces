@@ -25,7 +25,11 @@ class LocationController extends Controller
         ]);
 
         if ($request->hasFile('image_path')) {
-            $validated['image_path'] = $request->file('image_path')->store('locations', 'public');
+            $file = $request->file('image_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+
+            $validated['image_path'] = $filename;
         }
 
         $location = Location::create($validated + ['user_id' => auth()->id()]);
