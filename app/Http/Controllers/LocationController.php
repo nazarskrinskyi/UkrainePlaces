@@ -38,10 +38,10 @@ class LocationController extends Controller
     }
 
 
-    public function showByCity($city = null): View
+    public function showByCity(string $city): View
     {
-        $locations = Location::where('city_id', $city)->get() ?? null;
-        $region    = City::findOrFail($city);
+        $region = City::where('code', $city)->firstOrFail();
+        $locations = Location::where('city_id', $region->id)->get();
         return view('region', compact('locations', 'region'));
     }
 

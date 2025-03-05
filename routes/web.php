@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/region/{city}', [LocationController::class, 'showByCity'])->name('location.index');
+
 // Dashboard (requires auth)
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,8 +29,6 @@ Route::middleware('auth')->group(function () {
 
 // CKEditor file upload
 Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
-
-Route::get('/region/{city?}/', [LocationController::class, 'showByCity'])->name('location.index');
 
 // Locations
 Route::prefix('location')->group(function () {
