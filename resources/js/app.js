@@ -4,6 +4,8 @@ import "./bootstrap";
 
 window.Alpine = Alpine;
 
+Alpine.start();
+
 // DARK MODE TOGGLE BUTTON
 const themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
 const themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
@@ -254,5 +256,4 @@ ClassicEditor.create(document.querySelector("#editor"), editorConfig)
     })
     .catch(error => console.error("CKEditor initialization error:", error));
 
-Alpine.start();
 

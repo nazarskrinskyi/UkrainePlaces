@@ -28,9 +28,10 @@ Route::middleware('auth')->group(function () {
 // CKEditor file upload
 Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
 
+Route::get('/region/{city?}/', [LocationController::class, 'showByCity'])->name('location.index');
+
 // Locations
 Route::prefix('location')->group(function () {
-    Route::get('/region/{city?}/', [LocationController::class, 'showByCity'])->name('location.index');
     Route::get('/create/', [LocationController::class, 'create'])->name('location.create'); // Form page
     Route::post('/create/', [LocationController::class, 'store'])->name('location.store'); // Save to DB
     Route::get('/edit/{id}/', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page
