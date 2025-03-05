@@ -41,7 +41,8 @@ class LocationController extends Controller
     public function showByCity($city = null): View
     {
         $locations = Location::where('city_id', $city)->get() ?? null;
-        return view('location.index', compact('locations'));
+        $region    = City::findOrFail($city);
+        return view('region', compact('locations', 'region'));
     }
 
     public function show($id): View
