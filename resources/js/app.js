@@ -5,8 +5,8 @@ import "./bootstrap";
 window.Alpine = Alpine;
 
 // DARK MODE TOGGLE BUTTON
-var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
-var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
+const themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
+const themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 
 if (
     localStorage.getItem("color-theme") === "dark" ||
@@ -18,7 +18,7 @@ if (
     themeToggleDarkIcon.classList.remove("hidden");
 }
 
-var themeToggleBtn = document.getElementById("theme-toggle");
+const themeToggleBtn = document.getElementById("theme-toggle");
 
 themeToggleBtn.addEventListener("click", function () {
     themeToggleDarkIcon.classList.toggle("hidden");
@@ -82,8 +82,7 @@ const {
     Underline,
 } = window.CKEDITOR;
 
-const LICENSE_KEY =
-    "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDEzOTE5OTksImp0aSI6ImNlMmMxYzIxLTQxYWEtNDJkYS04NTNjLTM3ZjY0N2I1YmVmMSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI5Y2I5OWZlIn0.JJWrHdAfkONHJJ91JN4iRKizp86hos2jLaoddpqpRUY7-8cwY3dXSlLZCumEvalm0Zhae_nr09QycHusS12Nuw";
+const LICENSE_KEY = "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzE3MTgzOTksImp0aSI6ImQ2ZTg0NGUxLWY1ZTMtNDcxNC04NGUwLTQwZWMyZjkyNmQ1YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6IjU0ZDAwNzM3In0.YytQnwN1J25Vs6dGqO3-A89N7lgG6XNTwS3UU3seia74mu3bikIHKGGB5AlH2tKak0uzc_McnZm-9wzdCkh_Lw";
 
 const editorConfig = {
     toolbar: {
@@ -94,7 +93,6 @@ const editorConfig = {
             "italic",
             "underline",
             "|",
-            "emoji",
             "link",
             "insertImage",
             "insertImageViaUrl",
@@ -247,8 +245,14 @@ const editorConfig = {
     },
 };
 
-ClassicEditor.create(document.querySelector("#editor"), editorConfig).then(
-    (r) => console.log(r)
-);
+ClassicEditor.create(document.querySelector("#editor"), editorConfig)
+    .then(editor => {
+        editor.model.document.on('change:data', () => {
+            console.log(editor.getData())
+            document.querySelector('#description').value = editor.getData();
+        });
+    })
+    .catch(error => console.error("CKEditor initialization error:", error));
 
 Alpine.start();
+

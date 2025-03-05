@@ -4,7 +4,7 @@
 
 
         <form action="{{ isset($location) ? route('location.update', $location) : route('location.store') }}"
-              method="POST" enctype="multipart/form-data" class="space-y-6">
+              method="POST" enctype="multipart/form-data" class="space-y-6" id="location">
             @csrf
             @if(isset($location))
                 @method('PUT')
@@ -25,24 +25,6 @@
                     {!! old('description', $location->description ?? '') !!}
                 </div>
             </div>
-
-            <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.2.1/ckeditor5.css" crossorigin>
-            <script src="https://cdn.ckeditor.com/ckeditor5/44.2.1/ckeditor5.umd.js" crossorigin></script>
-
-            <script>
-                let editorInstance;
-
-                ClassicEditor
-                    .create(document.querySelector('#editor'))
-                    .then(editor => {
-                        editorInstance = editor;
-                        document.querySelector('form').addEventListener('submit', (event) => {
-                            // Ensure editor content is updated in the hidden input before submitting
-                            document.querySelector('#description').value = editorInstance.getData();
-                        });
-                    })
-                    .catch(error => console.error(error));
-            </script>
 
             <div>
                 <label for="city_id" class="block text-gray-700">Місто:</label>
@@ -93,6 +75,9 @@
             </button>
         </form>
     </div>
+
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.2.1/ckeditor5.css" crossorigin>
+    <script src="https://cdn.ckeditor.com/ckeditor5/44.2.1/ckeditor5.umd.js" crossorigin></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
