@@ -3,6 +3,7 @@ import "flowbite";
 import "./bootstrap";
 
 window.Alpine = Alpine;
+Alpine.start();
 
 // DARK MODE TOGGLE BUTTON
 var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
@@ -250,5 +251,3 @@ const editorConfig = {
 ClassicEditor.create(document.querySelector("#editor"), editorConfig).then(
     (r) => console.log(r)
 );
-
-Alpine.start();
