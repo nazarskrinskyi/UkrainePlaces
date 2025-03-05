@@ -2,6 +2,7 @@
 use App\Http\Controllers\Admin\City\CreateCityController;
 use App\Http\Controllers\Admin\City\DeleteCityController;
 use App\Http\Controllers\Admin\City\EditCityController;
+use App\Http\Controllers\Admin\City\IndexCityController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CKEditorUploadController;
 use App\Http\Controllers\HomeController;
@@ -29,14 +30,15 @@ Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->na
 
 // Locations
 Route::prefix('location')->group(function () {
-    Route::get('/{id}', [LocationController::class, 'show'])->name('location.show');
-    Route::get('/{city?}', [LocationController::class, 'showByCity'])->name('location.index');
-    Route::get('/create', [LocationController::class, 'create'])->name('location.create'); // Form page
-    Route::post('/create', [LocationController::class, 'store'])->name('location.store'); // Save to DB
-    Route::get('/edit/{id}', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page
-    Route::put('/edit/{id}', [LocationController::class, 'update'])->name('location.update'); // Save edits
-    Route::delete('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
+    Route::get('/region/{city?}/', [LocationController::class, 'showByCity'])->name('location.index');
+    Route::get('/create/', [LocationController::class, 'create'])->name('location.create'); // Form page
+    Route::post('/create/', [LocationController::class, 'store'])->name('location.store'); // Save to DB
+    Route::get('/edit/{id}/', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page
+    Route::put('/edit/{id}/', [LocationController::class, 'update'])->name('location.update'); // Save edits
+    Route::delete('/delete/{id}/', [LocationController::class, 'destroy'])->name('location.delete');
+    Route::get('/{id}/', [LocationController::class, 'show'])->name('location.show');
 });
+
 
 // Cities
 Route::get('/regions', [CityController::class, 'index'])->name('city.index');
@@ -57,8 +59,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     Route::prefix('city')->group(function () {
         Route::get('/create', [CreateCityController::class, 'create'])->name('admin.city.create'); // Form page
+        Route::get('/index', [IndexCityController::class, 'index'])->name('admin.city.index'); // Form page
         Route::post('/create', [CreateCityController::class, 'store'])->name('admin.city.store'); // Save new city
-        Route::get('/edit/{id}', [EditCityController::class, 'editForm'])->name('admin.city.edit.form'); // Form page
+        Route::get('/edit/{id}', [EditCityController::class, 'editForm'])->name('admin.city.edit'); // Form page
         Route::put('/edit/{id}', [EditCityController::class, 'update'])->name('admin.city.update'); // Save edits
         Route::delete('/delete/{id}', [DeleteCityController::class, 'destroy'])->name('admin.city.delete');
     });

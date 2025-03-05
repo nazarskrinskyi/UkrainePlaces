@@ -29,7 +29,7 @@ class EditCityController
         $city = City::findOrFail($id);
         $city->update($request->all());
 
-        return redirect()->route('admin.city.edit.form', ['id' => $id])
+        return redirect()->route('admin.city.edit', ['id' => $id])
             ->with('success', 'City updated successfully.');
     }
 }

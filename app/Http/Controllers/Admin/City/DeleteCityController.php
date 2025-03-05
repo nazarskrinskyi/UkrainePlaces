@@ -12,6 +12,6 @@ class DeleteCityController
     public function destroy($id): RedirectResponse
     {
         City::destroy($id);
-        return redirect()->route('city.index')->with('success', 'City deleted successfully.');
+        return redirect()->route('admin.city.index')->with('success', 'City deleted successfully.');
     }
 }

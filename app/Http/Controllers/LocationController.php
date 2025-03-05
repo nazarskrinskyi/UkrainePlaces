@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class LocationController extends Controller
 
     public function showByCity($city = null): View
     {
-        $locations = Location::where('city', $city)->get() ?? null;
+        $locations = Location::where('city_id', $city)->get() ?? null;
         return view('location.index', compact('locations'));
     }
 
@@ -47,7 +48,9 @@ class LocationController extends Controller
 
     public function create(): View
     {
-        return view('location.form');
+        $cities = City::all();
+
+        return view('location.form', compact('cities'));
     }
 
     public function editForm($id): View

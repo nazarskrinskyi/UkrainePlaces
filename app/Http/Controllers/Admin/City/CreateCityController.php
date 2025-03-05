@@ -27,6 +27,6 @@ class CreateCityController
 
         $city = City::create($validated);
 
-        return redirect()->route('admin.city.edit.form', ['id' => $city->id]);
+        return redirect()->route('admin.city.edit', ['id' => $city->id]);
     }
 }
