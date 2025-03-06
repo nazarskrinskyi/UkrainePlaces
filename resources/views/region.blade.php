@@ -7,10 +7,10 @@
     <!-- Description about region -->
 
     <!-- Map -->
-    <x-home.map :regions="$regions" :selectedRegion="$region" />
+    <x-map :regions="$regions" :selectedRegion="$region" />
 
     <!-- Filtering buttons -->
-    <div><x-region.dropdown-filtering-button /></div>
+    <div><x-region.dropdown-filtering-button :href="route('location.index', $region->code)" /></div>
 
     <!-- List of locations -->
     <div class="flex gap-6 justify-between">
@@ -23,8 +23,8 @@
         </div>
       @else
       @foreach ($locations as $location)
-      <x-location-card :image="asset('uploads/' . $location->image_path)" :title="$location->name"
-      :rating="(intval($location->avg_rating) == $location->avg_rating)
+      <x-location-card :image="asset('uploads/' . $location->image_path)" :id="$location->id"
+      :title="$location->name" :rating="(intval($location->avg_rating) == $location->avg_rating)
     ? intval($location->avg_rating)
     : number_format($location->avg_rating, 1)" />
     @endforeach

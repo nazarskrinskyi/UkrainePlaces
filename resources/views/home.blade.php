@@ -9,7 +9,7 @@
         <x-home.banner />
 
         <!-- Map -->
-        <x-home.map :regions="$regions" />
+        <x-map :regions="$regions" />
 
         <!-- Popular Locations -->
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 self-start mb-4 pt-4">Найбільш популярні</h2>
@@ -21,7 +21,7 @@
                 {{-- </div>--}}
         {{-- @else--}}
         @foreach($topRatedLocations as $location)
-            <x-location-card :image="asset('uploads/' . $location->image_path)" :title="$location->name"
+            <x-location-card :id="$location->id" :image="asset('uploads/' . $location->image_path)" :title="$location->name"
                 :rating="(intval($location->avg_rating) == $location->avg_rating)
                 ? intval($location->avg_rating)
                 : number_format($location->avg_rating, 1)" />
@@ -38,7 +38,7 @@
             {{-- </div>--}}
     {{-- @else--}}
     @foreach($latestLocations as $location)
-        <x-location-card :image="asset('uploads/' . $location->image_path)" :title="$location->name"
+        <x-location-card :id="$location->id" :image="asset('uploads/' . $location->image_path)" :title="$location->name"
             :rating="(intval($location->avg_rating) == $location->avg_rating)
                 ? intval($location->avg_rating)
                 : number_format($location->avg_rating, 1)" />
