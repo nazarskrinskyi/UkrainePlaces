@@ -48,7 +48,9 @@ class LocationController extends Controller
     public function show($id): View
     {
         $location = Location::findOrFail($id);
-        return view('location', compact('location'));
+        $user_name = Location::find($id)->user->name;
+
+        return view('location', compact('location', 'user_name'));
     }
 
     public function create(): View

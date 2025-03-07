@@ -33,39 +33,3 @@
   });
 
 </script>
-
-<style>
-  svg {
-    overflow: visible;
-  }
-
-  .ua-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    min-height: 480px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .ua-container {
-      scale: 0.6
-    }
-  }
-
-  .region {
-    fill: #ddd;
-    stroke: #333;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .region-active {
-    fill: #c2dbfd !important;
-  }
-
-  .region:hover {
-    fill: #aaa;
-    transform: translateY(-5px) translateX(5px);
-  }
-</style>
