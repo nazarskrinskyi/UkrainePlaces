@@ -13,7 +13,7 @@
 
         <!-- Popular Locations -->
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 self-start mb-4 pt-4">Найбільш популярні</h2>
-        <div class="flex gap-6 justify-between">
+        <div class="grid grid-cols-4 gap-6">
             {{-- @if (count($topRatedLocations) == 0)--}}
             {{-- <div--}} {{--
                 class='w-full flex items-center justify-center h-48 text-center text-xl font-semibold text-gray-800 dark:text-gray-200 '>--}}
@@ -30,7 +30,7 @@
     </div>
     <!-- Recently Added Locations -->
     <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 self-start mb-4 pt-4">Нові</h2>
-    <div class="flex gap-6 justify-between">
+    <div class="grid grid-cols-4 gap-6">
         {{-- @if (count($latestLocations) == 0)--}}
         {{-- <div--}} {{--
             class='w-full flex items-center justify-center h-48 text-center text-xl font-semibold text-gray-800 dark:text-gray-200 '>--}}
