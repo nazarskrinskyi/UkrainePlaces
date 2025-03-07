@@ -43,7 +43,8 @@
                         >
                             Register
                         </a>
-                        @endif @endauth
+                        @endif
+                         @endauth
                     </nav>
                     @endif
                 </header>
@@ -51,21 +52,22 @@
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
                 <x-theme-toggle />
-                <button
+
+                @if(Auth::user()?->name !== null)
+                <a 
+                    href="{{ route('location.create') }}"
                     class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
                 >
                     <span
                         class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent"
                     >
-                        Відрити випадкове місце
+                        Додати нове місце
                     </span>
-                </button>
-
+                </a>
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            @if(Auth::user()?->name !== null)
                             <button
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                             >
@@ -85,7 +87,6 @@
                                     </svg>
                                 </div>
                             </button>
-                            @endif
                         </x-slot>
 
                         <x-slot name="content">
@@ -111,6 +112,7 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endif
             </div>
 
             <!-- Hamburger -->
