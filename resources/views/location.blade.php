@@ -14,7 +14,7 @@
                     class="w-full rounded-lg shadow-md">
             </div>
             <div class="w-1/2 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md">
-                <p class="text-gray-800 dark:text-gray-200">{{ $location->description }}</p>
+                <p class="text-gray-800 dark:text-gray-200">{!! $location->description !!}</p>
             </div>
         </div>
 

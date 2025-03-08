@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class LocationController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -34,21 +34,42 @@ class LocationController extends Controller
 
         $location = Location::create($validated + ['user_id' => auth()->id()]);
 
-        return response()->json(['message' => 'Location added successfully', 'location' => $location], 201);
+        return redirect()->route('location.show', ['id' => $location->id]);
     }
 
-
-    public function showByCity(string $city): View
+    public function findByName(Request $request): JsonResponse
     {
+        $query = $request->get('query');
+
+        if ($query) {
+            $locations = Location::where('name', 'like', '%' . $query . '%')->limit(5)->get();
+            return response()->json($locations);
+        }
+
+        return response()->json();
+    }
+
+    public function showByCity(Request $request, string $city): View
+    {
+        $filter = $request->input('filter');
         $region = City::where('code', $city)->firstOrFail();
+
+        if ($filter !== null) {
+            [$key, $value] = explode('_', $filter);
+            $locations = Location::where('city_id', $region->id)->orderBy($key, $value)->get();
+
+            return view('region', compact('locations', 'region', 'filter'));
+        }
+
         $locations = Location::where('city_id', $region->id)->get();
-        return view('region', compact('locations', 'region'));
+
+        return view('region', compact('locations', 'region', 'filter'));
     }
 
     public function show($id): View
     {
         $location = Location::findOrFail($id);
-        $user_name = Location::find($id)->user->name;
+        $user_name = $location->user->name;
 
         return view('location', compact('location', 'user_name'));
     }

@@ -57,7 +57,7 @@ docker-compose exec laravel.test sh
 to run project after setup (and dont forget to run ./vendor/bin/sail up -d -_-)
 
 ```
-./vendor/bin/sail npm run dev
+./vendor/bin/sail yarn run dev
 ``` 
 
 ## License
