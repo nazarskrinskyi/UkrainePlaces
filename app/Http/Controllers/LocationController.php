@@ -84,7 +84,9 @@ class LocationController extends Controller
     public function editForm($id): View
     {
         $location = Location::findOrFail($id);
-        return view('location.form', compact('location'));
+        $cities = City::all();
+
+        return view('location.form', compact('location', 'cities'));
     }
 
     public function update(Request $request, $id): RedirectResponse
