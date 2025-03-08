@@ -77,6 +77,15 @@ const {
     TableToolbar,
     TextTransformation,
     Underline,
+    Alignment,  // Вирівнювання тексту
+    FontSize,   // Розмір шрифту
+    FontColor,  // Колір тексту
+    FontBackgroundColor, // Колір фону тексту
+    Highlight,  // Підсвічування тексту
+    Strikethrough, // Перекреслений текст
+    Subscript,  // Нижній індекс
+    Superscript, // Верхній індекс
+    MediaEmbed // Вставка відео
 } = window.CKEDITOR;
 
 const LICENSE_KEY = "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzE3MTgzOTksImp0aSI6ImQ2ZTg0NGUxLWY1ZTMtNDcxNC04NGUwLTQwZWMyZjkyNmQ1YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6IjU0ZDAwNzM3In0.YytQnwN1J25Vs6dGqO3-A89N7lgG6XNTwS3UU3seia74mu3bikIHKGGB5AlH2tKak0uzc_McnZm-9wzdCkh_Lw";
@@ -89,7 +98,16 @@ const editorConfig = {
             "bold",
             "italic",
             "underline",
+            "strikethrough", // Додаємо перекреслений текст
+            "subscript", // Нижній індекс
+            "superscript", // Верхній індекс
             "|",
+            "fontSize", // Розмір шрифту
+            "fontColor", // Колір тексту
+            "fontBackgroundColor", // Колір фону тексту
+            "highlight", // Підсвічування
+            "|",
+            "alignment", // Вирівнювання
             "link",
             "insertImage",
             "insertImageViaUrl",
@@ -98,6 +116,8 @@ const editorConfig = {
             "|",
             "outdent",
             "indent",
+            "|",
+            "mediaEmbed" // Вставка відео
         ],
         shouldNotGroupWhenFull: false,
     },
@@ -137,64 +157,16 @@ const editorConfig = {
         TableToolbar,
         TextTransformation,
         Underline,
+        Alignment,
+        FontSize,
+        FontColor,
+        FontBackgroundColor,
+        Highlight,
+        Strikethrough,
+        Subscript,
+        Superscript,
+        MediaEmbed
     ],
-    heading: {
-        options: [
-            {
-                model: "paragraph",
-                title: "Paragraph",
-                class: "ck-heading_paragraph",
-            },
-            {
-                model: "heading1",
-                view: "h1",
-                title: "Heading 1",
-                class: "ck-heading_heading1",
-            },
-            {
-                model: "heading2",
-                view: "h2",
-                title: "Heading 2",
-                class: "ck-heading_heading2",
-            },
-            {
-                model: "heading3",
-                view: "h3",
-                title: "Heading 3",
-                class: "ck-heading_heading3",
-            },
-            {
-                model: "heading4",
-                view: "h4",
-                title: "Heading 4",
-                class: "ck-heading_heading4",
-            },
-            {
-                model: "heading5",
-                view: "h5",
-                title: "Heading 5",
-                class: "ck-heading_heading5",
-            },
-            {
-                model: "heading6",
-                view: "h6",
-                title: "Heading 6",
-                class: "ck-heading_heading6",
-            },
-        ],
-    },
-    image: {
-        toolbar: [
-            "toggleImageCaption",
-            "imageTextAlternative",
-            "|",
-            "imageStyle:inline",
-            "imageStyle:wrapText",
-            "imageStyle:breakText",
-            "|",
-            "resizeImage",
-        ],
-    },
     language: "uk",
     licenseKey: LICENSE_KEY,
     link: {
@@ -214,14 +186,21 @@ const editorConfig = {
         feeds: [
             {
                 marker: "@",
-                feed: [
-                    /* See: https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html */
-                ],
+                feed: [],
             },
         ],
     },
-    menuBar: {
-        isVisible: true,
+    image: {
+        toolbar: [
+            "toggleImageCaption",
+            "imageTextAlternative",
+            "|",
+            "imageStyle:inline",
+            "imageStyle:wrapText",
+            "imageStyle:breakText",
+            "|",
+            "resizeImage",
+        ],
     },
     table: {
         contentToolbar: [

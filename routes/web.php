@@ -34,7 +34,7 @@ Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->na
 Route::prefix('location')->group(function () {
     Route::get('/create/', [LocationController::class, 'create'])->name('location.create'); // Form page
     Route::post('/create/', [LocationController::class, 'store'])->name('location.store'); // Save to DB
-    Route::post('/find-by-name/{query}', [LocationController::class, 'findByName'])->name('location.filter'); // Save to DB
+    Route::post('/find-by-name/', [LocationController::class, 'findByName'])->name('location.filter'); // Save to DB
     Route::get('/edit/{id}/', [LocationController::class, 'editForm'])->name('location.edit.form'); // Form page
     Route::put('/edit/{id}/', [LocationController::class, 'update'])->name('location.update'); // Save edits
     Route::delete('/delete/{id}/', [LocationController::class, 'destroy'])->name('location.delete');
