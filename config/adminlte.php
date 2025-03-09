@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/admin',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -322,8 +322,13 @@ return [
         ],
         [
             'text' => 'Регіони',
-            'url' => 'admin/city/index',
-            'icon' => 'far fa-fw fa-file',
+            'url' => 'admin/city/',
+            'icon' => 'far fa-fw fa-building',
+        ],
+        [
+            'text' => 'Зворотній зв\'язок',
+            'url' => 'admin/contact-us/',
+            'icon' => 'fas fa-pencil-ruler',
         ],
 //        ['header' => 'account_settings'],
 //        [
