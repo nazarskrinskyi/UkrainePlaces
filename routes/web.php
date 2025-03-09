@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 Route::get('/region/{city}', [LocationController::class, 'showByCity'])->name('location.index');
 
 // Dashboard (requires auth)
@@ -69,4 +77,4 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

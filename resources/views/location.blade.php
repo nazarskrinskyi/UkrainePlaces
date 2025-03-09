@@ -46,7 +46,8 @@
         <div class="flex justify-between text-sm text-gray-600 dark:text-gray-300">
             <span>Автор: {{ $user_name }}</span>
             <div class="space-x-4">
-                <x-secondary-button class="hover:underline">Редагувати</x-secondary-button>
+                <x-secondary-button class="hover:underline"><a
+                        href="{{ route('location.edit.form', $location->id) }}">Редагувати</a></x-secondary-button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between">
             <div class="flex items-center gap-3">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
@@ -9,7 +9,19 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
-                <x-dropdown-select />
+
+                {{-- Navigation Links --}}
+                <div class="hidden space-x-8 sm:-my-px sm:flex">
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                        {{ __('Про нас') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:flex">
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                        {{ __('Контакти') }}
+                    </x-nav-link>
+                </div>
+
                 <div class='relative z-50'>
                     <x-search-input />
 
@@ -22,13 +34,12 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
-                <x-theme-toggle />
-                <header class=" items-center gap-2 py-10 lg:grid-cols-3">
+                <header class=" items-center gap-2 lg:grid-cols-3">
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
                                 <a href="{{ url('/admin') }}"
-                                    class="rounded-md pl-8 px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                    class="rounded-md  px-3 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                                     Admin
                                 </a>
                             @else
@@ -47,6 +58,7 @@
                         </nav>
                     @endif
                 </header>
+                <x-dropdown-select />
                 @if (Auth::user()?->name !== null)
                     <a href="{{ route('location.create') }}"
                         class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
@@ -60,7 +72,7 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                     <div>{{ Auth::user()?->name ?? 'Login' }}</div>
 
                                     <div class="ms-1">
@@ -96,7 +108,9 @@
                         </x-dropdown>
                     </div>
                 @endif
+                <x-theme-toggle />
             </div>
+
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
