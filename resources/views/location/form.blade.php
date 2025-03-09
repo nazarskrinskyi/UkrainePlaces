@@ -64,7 +64,7 @@
                 <x-input-label for="image">Зображення:</x-input-label>
                 <x-text-input class='w-full p-3' type="file" name="image_path" id="image" />
                 @if(isset($location) && $location->image_path)
-                    <img src="{{ asset('storage/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover">
+                    <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover">
                 @endif
             </div>
 

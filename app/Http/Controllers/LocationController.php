@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Location;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class LocationController extends Controller
@@ -55,8 +56,12 @@ class LocationController extends Controller
         $region = City::where('code', $city)->firstOrFail();
 
         if ($filter !== null) {
-            [$key, $value] = explode('_', $filter);
-            $locations = Location::where('city_id', $region->id)->orderBy($key, $value)->get();
+            [$key, $value] = explode(':', $filter);
+            $locations = $key === 'rating' ? Location::with('reviews')
+                ->select('locations.*', DB::raw('(SELECT AVG(rating) FROM reviews WHERE reviews.location_id = locations.id) as avg_rating'))
+                ->where('city_id', $region->id)
+                ->orderBy(DB::raw('avg_rating'), $value)
+                ->get() : Location::where('city_id', $region->id)->orderBy($key, $value)->get();
 
             return view('region', compact('locations', 'region', 'filter'));
         }
@@ -91,13 +96,17 @@ class LocationController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+            'city_id' => 'required|exists:cities,id',
+            'image_path' => 'nullable|image|max:2048',
         ]);
 
         $location = Location::findOrFail($id);
-        $location->update($request->all());
+        $location->update($validated);
 
         return redirect()->route('location.show', ['id' => $id])
             ->with('success', 'Location updated successfully.');
