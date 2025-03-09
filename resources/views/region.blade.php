@@ -10,7 +10,7 @@
     <x-map :regions="$regions" :selectedRegion="$region" />
 
     <!-- Filtering buttons -->
-    <div><x-region.dropdown-filtering-button :href="route('location.index', $region->code)" /></div>
+    <div><x-region.dropdown-filtering-button :href="route('location.index', $region->code)" :currentOption="$filter" /></div>
 
     <!-- List of locations -->
     <div class="grid grid-cols-4 gap-6">

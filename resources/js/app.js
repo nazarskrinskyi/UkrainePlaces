@@ -6,12 +6,9 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// DARK MODE TOGGLE BUTTON
-
 const themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
 const themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 
-// Проверяем, какая тема установлена в localStorage или предпочитается системой
 const currentTheme = localStorage.getItem("color-theme");
 const systemPrefersDark = window.matchMedia(
     "(prefers-color-scheme: dark)"
@@ -77,15 +74,15 @@ const {
     TableToolbar,
     TextTransformation,
     Underline,
-    Alignment,  // Вирівнювання тексту
-    FontSize,   // Розмір шрифту
-    FontColor,  // Колір тексту
-    FontBackgroundColor, // Колір фону тексту
-    Highlight,  // Підсвічування тексту
-    Strikethrough, // Перекреслений текст
-    Subscript,  // Нижній індекс
-    Superscript, // Верхній індекс
-    MediaEmbed // Вставка відео
+    Alignment,
+    FontSize,
+    FontColor,
+    FontBackgroundColor,
+    Highlight,
+    Subscript,
+    Strikethrough,
+    Superscript,
+    MediaEmbed
 } = window.CKEDITOR;
 
 const LICENSE_KEY = "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzE3MTgzOTksImp0aSI6ImQ2ZTg0NGUxLWY1ZTMtNDcxNC04NGUwLTQwZWMyZjkyNmQ1YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6IjU0ZDAwNzM3In0.YytQnwN1J25Vs6dGqO3-A89N7lgG6XNTwS3UU3seia74mu3bikIHKGGB5AlH2tKak0uzc_McnZm-9wzdCkh_Lw";
@@ -98,16 +95,16 @@ const editorConfig = {
             "bold",
             "italic",
             "underline",
-            "strikethrough", // Додаємо перекреслений текст
-            "subscript", // Нижній індекс
-            "superscript", // Верхній індекс
+            "strikethrough",
+            "subscript",
+            "superscript",
             "|",
-            "fontSize", // Розмір шрифту
-            "fontColor", // Колір тексту
-            "fontBackgroundColor", // Колір фону тексту
-            "highlight", // Підсвічування
+            "fontSize",
+            "fontColor",
+            "fontBackgroundColor",
+            "highlight",
             "|",
-            "alignment", // Вирівнювання
+            "alignment",
             "link",
             "insertImage",
             "insertImageViaUrl",
@@ -117,7 +114,7 @@ const editorConfig = {
             "outdent",
             "indent",
             "|",
-            "mediaEmbed" // Вставка відео
+            "mediaEmbed"
         ],
         shouldNotGroupWhenFull: false,
     },
@@ -210,6 +207,22 @@ const editorConfig = {
             "tableProperties",
             "tableCellProperties",
         ],
+    },
+    fontSize: {
+        options: [
+            "10px",
+            "12px",
+            "14px",
+            "16px",
+            "18px",
+            "20px",
+            "24px",
+            "28px",
+            "32px",
+            "36px",
+            "40px",
+        ],
+        supportAllValues: true,
     },
     simpleUpload: {
         uploadUrl: "/ckeditor/upload",
