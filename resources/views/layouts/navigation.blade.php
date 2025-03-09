@@ -223,6 +223,6 @@
         event.preventDefault();
 
         const query = event.currentTarget.value;
-        handleFetchSearchResults(query);
+        if (query !== '') handleFetchSearchResults(query);
     }
 </script>
