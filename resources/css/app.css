@@ -59,3 +59,26 @@ svg {
     fill: #aaa;
     transform: translateY(-5px) translateX(5px);
 }
+
+.dark .ck-toolbar {
+    background-color: #1f2937 !important; /* Темно-серый */
+    border-color: #374151 !important;
+}
+
+.dark .ck-content {
+    background-color: #1e293b !important; /* Темный фон */
+    color: #ffffff !important; /* Белый текст */
+    border-color: #374151 !important;
+}
+
+.dark .ck-button {
+    filter: invert(1); /* Делаем иконки белыми */
+}
+
+.dark .ck-placeholder {
+    color: #9ca3af !important;
+}
+
+.dark .ck-sticky-panel__content {
+    border-color: #374151 !important;
+}
