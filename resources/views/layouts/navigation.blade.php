@@ -4,7 +4,7 @@
         <div class="flex justify-between">
             <div class="flex items-center gap-3">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="shrink-0 flex items-center p-2">
                     <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
@@ -180,18 +180,25 @@
 
     function showSearchResults(data) {
         const searchResults = document.getElementById('search-results');
-        if (data.length > 0) {
+        if (data) {
             searchResults.style.display = 'block';
             searchResults.innerHTML = '';
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    const location = data[i];
+                    const locationLink = document.createElement('a');
+                    locationLink.href = '/location/' + location.id;
+                    locationLink.textContent = location.name;
+                    locationLink.classList.add('block', 'px-4', 'py-2', 'text-lg', 'text-gray-700', 'hover:bg-gray-100',
+                        'dark:text-gray-200', 'dark:hover:bg-gray-600');
+                    searchResults.appendChild(locationLink);
+                }
 
-            for (let i = 0; i < data.length; i++) {
-                const location = data[i];
-                const locationLink = document.createElement('a');
-                locationLink.href = '/location/' + location.id;
-                locationLink.textContent = location.name;
-                locationLink.classList.add('block', 'px-4', 'py-2', 'text-lg', 'text-gray-700', 'hover:bg-gray-100',
-                    'dark:text-gray-200', 'dark:hover:bg-gray-600');
-                searchResults.appendChild(locationLink);
+            } else {
+                const searchResult = document.createElement('span');
+                searchResult.textContent = 'Нічого не знайдено';
+                searchResult.classList.add('block', 'px-4', 'py-2', 'text-lg', 'text-gray-700', 'dark:text-gray-200');
+                searchResults.appendChild(searchResult);
             }
         } else {
             searchResults.style.display = 'none';
@@ -223,6 +230,10 @@
         event.preventDefault();
 
         const query = event.currentTarget.value;
-        if (query !== '') handleFetchSearchResults(query);
+        if (query !== '') {
+            handleFetchSearchResults(query);
+        } else {
+            showSearchResults(null);
+        }
     }
 </script>

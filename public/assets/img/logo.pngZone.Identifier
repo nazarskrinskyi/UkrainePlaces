@@ -1,3 +1,4 @@
 [ZoneTransfer]
 ZoneId=3
-HostUrl=https://www.remove.bg/
+ReferrerUrl=vscode-file://vscode-app/c:/Users/Vladxd/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
+HostUrl=file://wsl.localhost/Ubuntu/home/vlad/UkrainePlaces/public/assets/img/logo.png
