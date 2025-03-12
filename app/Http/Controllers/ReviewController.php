@@ -10,17 +10,19 @@ use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'location_id' => 'required|exists:locations,id',
-            'rating' => 'required|decimal|min:0|max:5',
+            'rating' => 'required|string|min:0|max:5',
             'comment' => 'nullable|string',
         ]);
 
-        $review = Review::create($validated + ['user_id' => auth()->id()]);
+        $validated['rating'] = (float) $validated['rating'];
 
-        return response()->json(['message' => 'Review added successfully', 'review' => $review], 201);
+        Review::create($validated + ['user_id' => auth()->id()]);
+
+        return redirect()->back()->with('success', 'Комментар додано');
     }
 
     public function editForm($id): View

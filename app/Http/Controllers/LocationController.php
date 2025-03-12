@@ -61,12 +61,16 @@ class LocationController extends Controller
                 ->select('locations.*', DB::raw('(SELECT AVG(rating) FROM reviews WHERE reviews.location_id = locations.id) as avg_rating'))
                 ->where('city_id', $region->id)
                 ->orderBy(DB::raw('avg_rating'), $value)
-                ->get() : Location::where('city_id', $region->id)->orderBy($key, $value)->get();
+                ->get() : Location::with('reviews')
+                ->select('locations.*', DB::raw('(SELECT AVG(rating) FROM reviews WHERE reviews.location_id = locations.id) as avg_rating'))
+                ->where('city_id', $region->id)->orderBy($key, $value)->get();
 
             return view('region', compact('locations', 'region', 'filter'));
         }
 
-        $locations = Location::where('city_id', $region->id)->get();
+        $locations = Location::with('reviews')
+            ->select('locations.*', DB::raw('(SELECT AVG(rating) FROM reviews WHERE reviews.location_id = locations.id) as avg_rating'))
+            ->where('city_id', $region->id)->get();
 
         return view('region', compact('locations', 'region', 'filter'));
     }
@@ -104,6 +108,14 @@ class LocationController extends Controller
             'city_id' => 'required|exists:cities,id',
             'image_path' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image_path')) {
+            $file = $request->file('image_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+
+            $validated['image_path'] = $filename;
+        }
 
         $location = Location::findOrFail($id);
         $location->update($validated);

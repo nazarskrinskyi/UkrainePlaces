@@ -23,7 +23,7 @@
                 <x-text-input type="hidden" name="description" id="description"
                     value="{{ old('description', $location->description ?? '') }}" />
                 <div id="editor"
-                    class="border rounded-lg p-2 min-h-[200px] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm ">
+                    class="ck-content border rounded-lg p-2 min-h-[200px] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm ">
                     {!! old('description', $location->description ?? '') !!}
                 </div>
             </div>

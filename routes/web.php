@@ -57,7 +57,7 @@ Route::get('/regions', [CityController::class, 'index'])->name('city.index');
 
 // Reviews
 Route::prefix('review')->group(function () {
-    Route::post('/create', [ReviewController::class, 'store'])->name('review.store');
+    Route::post('/create', [ReviewController::class, 'store'])->name('review.create');
     Route::get('/edit/{id}', [ReviewController::class, 'editForm'])->name('review.edit.form'); // Form page
     Route::put('/edit/{id}', [ReviewController::class, 'update'])->name('review.update');
     Route::delete('/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');

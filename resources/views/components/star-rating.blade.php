@@ -1,8 +1,8 @@
 @props(['rating'])
 
 @php
-  $fullStars = floor((int)$rating); // Кількість повних зірок
-  $halfStar = ((int)$rating - $fullStars) >= 0.5; // Чи є половинка
+  $fullStars = floor($rating); // Кількість повних зірок
+  $halfStar = ($rating - $fullStars) >= 0.5; // Чи є половинка
   $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Порожні зірки
 @endphp
 

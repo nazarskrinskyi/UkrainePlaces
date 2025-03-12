@@ -11,6 +11,10 @@
 
 
 <x-app-layout>
+    @if (session('success'))
+        <x-pop-up message="{{ session('success') }}" />
+    @endif
+
     <div class="flex flex-col gap-6 py-12 container mx-auto">
         <x-slot name="footer">
             <x-footer />
@@ -43,15 +47,26 @@
         <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md overflow-hidden ">
             <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Опис</h2>
             <div
-                class="text-gray-800 dark:text-gray-200 break-words border border-gray-400 dark:border-gray-600 p-4 rounded-lg">
+                class="ck-content text-gray-800 dark:text-gray-200 break-words border border-gray-400 dark:border-gray-600 p-4 rounded-lg">
                 {!! $location->description !!}</div>
+        </div>
+        <div class="flex justify-between text-md text-gray-600 dark:text-gray-300">
+            <span>Автор: {{ $user_name }}</span>
+            @if (Auth::user() && Auth::user()->id == $location->user_id)
+                <div class="space-x-4">
+                    <x-secondary-button class="hover:underline"><a
+                            href="{{ route('location.edit.form', $location->id) }}">Редагувати</a></x-secondary-button>
+                </div>
+            @endif
         </div>
 
         <!-- Comments -->
         <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+            @auth
             <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Залиште свій відгук</h2>
-            <form method="POST"
+            <form method="POST" action="{{ route('review.create') }}"
                 class="space-y-4 mb-4 border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 p-2">
+                @csrf
                 <textarea name="comment" placeholder="Ваш відгук..."
                     class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2"></textarea>
 
@@ -72,7 +87,8 @@
                                 </path>
                             </svg>
                         </template>
-                        <input type="hidden" name="rating" x-model="rating">
+                        <input type="number" class="hidden" name="rating" x-model="rating">
+                        <input type="hidden" name="location_id" value="{{ $location->id }}">
                     </div>
 
                     <x-primary-button type="submit"
@@ -80,54 +96,25 @@
                         відгук</x-primary-button>
                 </div>
             </form>
-
-
+            @endauth
             <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Відгуки</h2>
             <div class="space-y-4">
-                {{-- @foreach ($location->comments as $comment) --}}
+                 @foreach ($location->reviews as $comment)
                 <div class="flex gap-10 p-2 bg-white dark:bg-gray-900 rounded-lg shadow-md">
                     <div class='flex flex-col gap-3'>
-                        <x-star-rating :rating="4" />
+                        <x-star-rating :rating="$comment->rating" />
                         <span
                             class="text-xs text-gray-500 dark:text-gray-400">{{ $formatter->format(strtotime($location->created_at)) }}</span>
                     </div>
                     <div class="grow flex flex-col gap-1">
-                        <p class="text-gray-700 dark:text-gray-300 font-semibold">Автор</p>
-                        <p class="text-gray-700 dark:text-gray-300">Коментар слухати)) — столиця та найбільше місто
-                            України. Розташований у середній течії Дніпра, у північній Наддніпрянщині. Політичний,
-                            соціально-економічний, транспортний, освітньо-науковий, історичний, культурний та духовний
-                            центр України. У системі адміністративно-територіального устрою України Київ має спеціальний
-                            статус, визначений Конституцією, і не входить до складу жодної області, хоча і є
-                            адміністративним центром Київської області[8]. Місце розташування центральних органів влади
-                            України, іноземних місій, штаб-квартир більшості підприємств і громадських об'єднань, що
-                            працюють в Україні.
-
-                            За «Повістю временних літ», Київ заснував полянський князь Кий зі своїми братами Щеком і
-                            Хоривом та сестрою Либіддю. Згідно з археологічними даними та писемними джерелами, початок
-                            безперервного розвитку Києва датується 2-ю половиною V ст. — 1-ю половиною VI століття;
-                            осередком розширення Києва була Замкова гора[2]. Протягом своєї історії місто було столицею
-                            полян, Русі[a] і України[b], а також адміністративним центром однойменних князівства, землі,
-                            воєводства, повіта, полку, намісництва, губернії, округи, району, генеральної округи, і
-                            зокрема православної митрополії, генерал-губернаторства і військової округи.
-
-                            Один із найстаріших історичних центрів Східної Європи та християнства — Софійськи</p>
+                        <p class="text-gray-700 dark:text-gray-300 font-semibold">{{ $comment->user->name }}</p>
+                        <p class="text-gray-700 dark:text-gray-300">{{ $comment->comment }}</p>
                     </div>
-                    {{-- @endforeach --}}
                 </div>
+
+                     @endforeach
             </div>
-
-
             <!-- Location Footer -->
-        </div>
-
-        <div class="flex justify-between text-sm text-gray-600 dark:text-gray-300">
-            <span>Автор: {{ $user_name }}</span>
-            @if (Auth::user() && Auth::user()->id == $location->user_id)
-                <div class="space-x-4">
-                    <x-secondary-button class="hover:underline"><a
-                            href="{{ route('location.edit.form', $location->id) }}">Редагувати</a></x-secondary-button>
-                </div>
-            @endif
         </div>
 
         <style>
