@@ -72,8 +72,12 @@ svg {
 }
 
 .dark .ck-button {
-    filter: invert(1); /* Делаем иконки белыми */
+    filter: invert(1);
 }
+
+/* .dark .ck-button .ck-color-grid__tile {
+    filter: invert(0) !important;
+} */
 
 .dark .ck-placeholder {
     color: #9ca3af !important;
