@@ -7,6 +7,7 @@
         IntlDateFormatter::GREGORIAN,
         'd MMMM yyyy',
     );
+    $isMobile = request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'));
 @endphp
 
 
@@ -141,4 +142,10 @@
             @endif
         </script>
 
+        @if($isMobile)
+            <a href="{{ route('location.navigate', ['id' => $location->id]) }}"
+               class="mobile-map-button mobile-only">
+                📍 Прокласти маршрут
+            </a>
+        @endif
 </x-app-layout>

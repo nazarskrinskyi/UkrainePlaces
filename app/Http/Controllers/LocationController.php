@@ -14,6 +14,18 @@ use Illuminate\View\View;
 
 class LocationController extends Controller
 {
+    public function navigateToLocation($id): RedirectResponse
+    {
+        $location = Location::findOrFail($id);
+
+        $latitude = $location->latitude;
+        $longitude = $location->longitude;
+
+        $mapsUrl = "https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude&travelmode=driving";
+
+        return redirect()->away($mapsUrl);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

@@ -17,8 +17,8 @@
         <div><x-region.dropdown-filtering-button :href="route('location.index', $region->code)" :currentOption="$filter" /></div>
 
         <!-- List of locations -->
-        <div class="grid grid-cols-4 gap-6">
-            @if (count($locations) == 0)
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        @if (count($locations) == 0)
                 <div
                     class='w-full col-span-4 flex items-center justify-center h-48 text-center text-xl font-semibold text-gray-800 dark:text-gray-200 '>
                     Локацій в області відсутні

@@ -82,3 +82,36 @@ svg {
 .dark .ck-sticky-panel__content {
     border-color: #374151 !important;
 }
+
+@media only screen and (max-width: 768px) {
+    .text-2xl {
+        text-align: center;
+    }
+    .mobile-map-button {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #007bff;
+        color: white;
+        padding: 14px 24px;
+        border-radius: 30px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 9999;
+        transition: background-color 0.3s;
+    }
+
+    .mobile-map-button:hover {
+        background-color: #0056b3;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none !important;
+    }
+}
+

@@ -55,6 +55,9 @@ Route::prefix('location')->group(function () {
 // Cities
 Route::get('/regions', [CityController::class, 'index'])->name('city.index');
 
+Route::get('/navigate/{id}', [LocationController::class, 'navigateToLocation'])
+    ->name('location.navigate');
+
 // Reviews
 Route::prefix('review')->group(function () {
     Route::post('/create', [ReviewController::class, 'store'])->name('review.create');
