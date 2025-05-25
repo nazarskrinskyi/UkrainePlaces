@@ -34,25 +34,28 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
-                <header class=" items-center gap-2 lg:grid-cols-3">
+                <header class=" items-center gap-2 lg:grid-cols-3 mr-3">
                     @if (Route::has('login'))
-                        <nav class="-mx-3 flex flex-1 justify-end">
+                        <nav class="-mx-3 flex flex-1 justify-end gap-3">
                             @auth
-                                <a href="{{ url('/admin') }}"
-                                    class="rounded-md  px-3 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                    Admin
-                                </a>
+                                <x-secondary-button>
+                                    <a href="{{ url('/admin') }}">
+                                        Адмін
+                                    </a>
+                                </x-secondary-button>
                             @else
-                                <a href="{{ route('login') }}"
-                                    class="rounded-md pl-8 px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                    Log in
-                                </a>
+                                <x-primary-button>
+                                    <a href="{{ route('login') }}">
+                                        Увійти
+                                    </a>
+                                </x-primary-button>
 
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}"
-                                        class="rounded-md pl-2 px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                        Register
-                                    </a>
+                                    <x-secondary-button>
+                                        <a href="{{ route('register') }}">
+                                            Зареєструватися
+                                        </a>
+                                    </x-secondary-button>
                                 @endif
                             @endauth
                         </nav>
