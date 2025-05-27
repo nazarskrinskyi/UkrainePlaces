@@ -39,7 +39,7 @@
                         <nav class="-mx-3 flex flex-1 justify-end gap-3">
                             @auth
                                 <x-secondary-button>
-                                    <a href="{{ UrlHelper::localizedRoute('admin.dashboard') }}">
+                                    <a href="{{ url('/admin') }}">
                                         Адмін
                                     </a>
                                 </x-secondary-button>
