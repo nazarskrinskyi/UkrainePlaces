@@ -27,7 +27,7 @@
         <!-- Contact Form -->
         <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
             <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Напишіть нам</h2>
-            <form action="{{ route('contact-us.upload') }}" method="POST" class="space-y-4">
+            <form action="{{ UrlHelper::localizedRoute('contact-us.upload') }}" method="POST" class="space-y-4">
                 @csrf
                 <x-text-input type="text" name="username" placeholder="Ваше ім'я" class="w-full " />
                 <x-text-input type="email" name="email" placeholder="Ваш Email" class="w-full" />

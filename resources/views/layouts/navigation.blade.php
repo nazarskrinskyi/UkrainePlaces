@@ -5,19 +5,19 @@
             <div class="flex items-center gap-3">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center p-2">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ UrlHelper::localizedRoute('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 {{-- Navigation Links --}}
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
-                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                    <x-nav-link :href="UrlHelper::localizedRoute('about')" :active="request()->routeIs('about')">
                         {{ __('Про нас') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
-                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                    <x-nav-link :href="UrlHelper::localizedRoute('contact')" :active="request()->routeIs('contact')">
                         {{ __('Контакти') }}
                     </x-nav-link>
                 </div>
@@ -39,20 +39,20 @@
                         <nav class="-mx-3 flex flex-1 justify-end gap-3">
                             @auth
                                 <x-secondary-button>
-                                    <a href="{{ url('/admin') }}">
+                                    <a href="{{ UrlHelper::localizedRoute('admin.dashboard') }}">
                                         Адмін
                                     </a>
                                 </x-secondary-button>
                             @else
                                 <x-primary-button>
-                                    <a href="{{ route('login') }}">
+                                    <a href="{{ UrlHelper::localizedRoute('login') }}">
                                         Увійти
                                     </a>
                                 </x-primary-button>
 
                                 @if (Route::has('register'))
                                     <x-secondary-button>
-                                        <a href="{{ route('register') }}">
+                                        <a href="{{ UrlHelper::localizedRoute('register') }}">
                                             Зареєструватися
                                         </a>
                                     </x-secondary-button>
@@ -63,7 +63,7 @@
                 </header>
                 <x-dropdown-select />
                 @if (Auth::user()?->name !== null)
-                    <a href="{{ route('location.create') }}"
+                    <a href="{{ UrlHelper::localizedRoute('location.create') }}"
                         class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                         <span
                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
@@ -90,7 +90,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
+                                <x-dropdown-link :href="UrlHelper::localizedRoute('profile.edit')">
                                     {{ __('Профіль') }}
                                 </x-dropdown-link>
 
@@ -98,7 +98,7 @@
 
                                 <!-- Authentication -->
 
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ UrlHelper::localizedRoute('logout') }}">
                                     @csrf
 
                                     <x-dropdown-link :href="route('logout')"
@@ -156,10 +156,10 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ UrlHelper::localizedRoute('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link :href="UrlHelper::localizedRoute('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}

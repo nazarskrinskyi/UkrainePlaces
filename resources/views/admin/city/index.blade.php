@@ -9,7 +9,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="{{ route('admin.city.create') }}" class="btn btn-primary">Create City</a>
+            <a href="{{ UrlHelper::localizedRoute('admin.city.create') }}" class="btn btn-primary">Create City</a>
         </div>
 
         @if($cities->count())
@@ -29,9 +29,9 @@
                         <td>{{ $city->name }}</td>
                         <td>{{ $city->code }}</td>
                         <td class="text-end">
-                            <a href="{{ route('admin.city.edit', $city->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ UrlHelper::localizedRoute('admin.city.edit', $city->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
-                            <form action="{{ route('admin.city.delete', $city->id) }}" method="POST" class="d-inline">
+                            <form action="{{ UrlHelper::localizedRoute('admin.city.delete', $city->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>

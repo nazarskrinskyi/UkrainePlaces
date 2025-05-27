@@ -56,7 +56,7 @@
             @if (Auth::user() && Auth::user()->id == $location->user_id)
                 <div class="space-x-4">
                     <x-secondary-button class="hover:underline"><a
-                            href="{{ route('location.edit.form', $location->id) }}">Редагувати</a></x-secondary-button>
+                            href="{{ UrlHelper::localizedRoute('location.edit.form', $location->id) }}">Редагувати</a></x-secondary-button>
                 </div>
             @endif
         </div>
@@ -65,7 +65,7 @@
         <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-lg shadow-md">
             @auth
                 <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Залиште свій відгук</h2>
-                <form method="POST" action="{{ route('review.create') }}"
+                <form method="POST" action="{{ UrlHelper::localizedRoute('review.create') }}"
                     class="space-y-4 mb-4 border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 p-2">
                     @csrf
                     <textarea name="comment" placeholder="Ваш відгук..."
@@ -142,7 +142,7 @@
         </script>
 
         @if($isMobile)
-            <a href="{{ route('location.navigate', ['id' => $location->id]) }}"
+            <a href="{{ UrlHelper::localizedRoute('location.navigate', ['id' => $location->id]) }}"
                class="mobile-map-button mobile-only">
                 📍 Прокласти маршрут
             </a>

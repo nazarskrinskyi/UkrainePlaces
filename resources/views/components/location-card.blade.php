@@ -2,7 +2,7 @@
 
 <div
     class="container mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
-    <a href='{{ route('location.show', ['id' => $id]) }}'>
+    <a href='{{ UrlHelper::localizedRoute('location.show', ['id' => $id]) }}'>
         <img class="w-full h-48 object-cover" src="{{ $image }}" alt="{{ $title }}">
         <div class="p-4">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $title }}</h3>

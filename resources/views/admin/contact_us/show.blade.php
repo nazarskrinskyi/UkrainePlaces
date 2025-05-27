@@ -18,5 +18,5 @@
         </div>
     </div>
 
-    <a href="{{ route('contact-us.index') }}" class="btn btn-primary mt-3">Back to List</a>
+    <a href="{{ UrlHelper::localizedRoute('contact-us.index') }}" class="btn btn-primary mt-3">Back to List</a>
 @endsection

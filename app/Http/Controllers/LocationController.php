@@ -29,23 +29,36 @@ class LocationController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'city_id' => 'required|exists:cities,id',
             'image_path' => 'nullable|image|max:2048',
+            'translations' => 'nullable|array',
+            'translations.*.name' => 'required_with:translations|string|max:255',
+            'translations.*.description' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $filename);
-
             $validated['image_path'] = $filename;
         }
 
-        $location = Location::create($validated + ['user_id' => auth()->id()]);
+        DB::transaction(function () use ($validated, $request, &$location) {
+            $location = Location::create($validated + ['user_id' => auth()->id()]);
+
+            if ($request->has('translations')) {
+                foreach ($request->input('translations') as $locale => $data) {
+                    $location->translations()->create([
+                        'location_id' => $location->id,
+                        'locale' => $locale,
+                        'name' => $data['name'] ?? '',
+                        'description' => $data['description'] ?? '',
+                    ]);
+                }
+            }
+        });
 
         return redirect()->route('location.show', ['id' => $location->id]);
     }
@@ -113,26 +126,39 @@ class LocationController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'city_id' => 'required|exists:cities,id',
             'image_path' => 'nullable|image|max:2048',
+            'translations' => 'nullable|array',
+            'translations.*.name' => 'required_with:translations|string|max:255',
+            'translations.*.description' => 'nullable|string',
         ]);
+
+        $location = Location::findOrFail($id);
 
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $filename);
-
             $validated['image_path'] = $filename;
         }
 
-        $location = Location::findOrFail($id);
         $location->update($validated);
 
-        return redirect()->route('location.show', ['id' => $id])
+        DB::transaction(function () use ($location, $validated, $request) {
+            if ($request->has('translations')) {
+                foreach ($request->input('translations') as $locale => $data) {
+                    $location->translations()->updateOrCreate([
+                        'locale' => $locale,
+                        'name' => $data['name'] ?? '',
+                        'description' => $data['description'] ?? '',
+                    ]);
+                }
+            }
+        });
+
+        return redirect()->route('location.show', ['id' => $location->id])
             ->with('success', 'Location updated successfully.');
     }
 

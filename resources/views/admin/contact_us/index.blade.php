@@ -25,7 +25,7 @@
                 <td>{{ $entry->created_at }}</td>
                 <td>
                     <!-- Show Button -->
-                    <a href="{{ route('contact-us.show', $entry->id) }}" class="btn btn-info">Show</a>
+                    <a href="{{ UrlHelper::localizedRoute('contact-us.show', $entry->id) }}" class="btn btn-info">Show</a>
                 </td>
             </tr>
         @endforeach

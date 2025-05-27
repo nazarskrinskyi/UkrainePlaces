@@ -12,7 +12,7 @@
             <h3 class="card-title">{{ isset($city) ? 'Редагувати місто' : 'Створити місто' }}</h3>
         </div>
 
-        <form action="{{ isset($city) ? route('admin.city.update', $city) : route('admin.city.store') }}" method="POST">
+        <form action="{{ isset($city) ? UrlHelper::localizedRoute('admin.city.update', $city) : UrlHelper::localizedRoute('admin.city.store') }}" method="POST">
             @csrf
             @if(isset($city))
                 @method('PUT')

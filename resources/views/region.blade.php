@@ -14,7 +14,7 @@
         <x-map :regions="$regions" :selectedRegion="$region" />
 
         <!-- Filtering buttons -->
-        <div><x-region.dropdown-filtering-button :href="route('location.index', $region->code)" :currentOption="$filter" /></div>
+        <div><x-region.dropdown-filtering-button :href="UrlHelper::localizedRoute('location.index', $region->code)" :currentOption="$filter" /></div>
 
         <!-- List of locations -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

@@ -5,7 +5,7 @@
         </h2>
 
 
-        <form action="{{ isset($location) ? route('location.update', $location) : route('location.store') }}"
+        <form action="{{ isset($location) ? UrlHelper::localizedRoute('location.update', $location) : UrlHelper::localizedRoute('location.store') }}"
             method="POST" enctype="multipart/form-data" class="space-y-6" id="location">
             @csrf
             @if(isset($location))

@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+
 return [
 
     /*
@@ -105,6 +109,13 @@ return [
         ),
     ],
 
+    'aliases' => [
+        'UrlHelper' => App\Facades\UrlHelper::class,
+        'Route' => Route::class,
+        'Auth' => Auth::class,
+        'View' => View::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -122,5 +133,4 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
 ];
