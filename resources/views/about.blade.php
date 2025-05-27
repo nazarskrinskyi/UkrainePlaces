@@ -5,16 +5,12 @@
         </x-slot>
 
         <!-- Heading -->
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Про сайт WonderUA</h1>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ __('about.title') }}</h1>
 
         <!-- Description -->
         <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
             <p class="text-gray-800 dark:text-gray-200">
-                <strong>WonderUA</strong> — це платформа, де користувачі можуть досліджувати цікаві, відомі та
-                маловідомі міста України,
-                дізнаватися про їхню історію, культуру та особливості. Кожен може не лише ознайомитися з містами та
-                регіонами,
-                але й додавати власні цікаві місця, інтерактивно вносячи інформацію.
+                <strong>WonderUA</strong> {{ __('about.description') }}
             </p>
         </div>
 
@@ -22,15 +18,15 @@
         <div class="bg-gray-200 dark:bg-gray-700 p-6 rounded-lg shadow-md">
             <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Функціонал сайту</h2>
             <ul class="list-disc list-inside text-gray-800 dark:text-gray-200 space-y-2">
-                <li><strong>Дослідження міст та регіонів:</strong> Перегляд карт та інформаційних сторінок про міста й
-                    села України.</li>
-                <li><strong>Додавання нових місць:</strong> Зареєстровані користувачі можуть додавати нові локації,
-                    описувати їх, додавати фото та координати.</li>
-                <li><strong>Підтримка українських виробників:</strong> Заохочуємо додавати локації, пов'язані з
-                    місцевими підприємствами.</li>
-                <li><strong>Інтерактивна карта:</strong> Відображення місць на карті для зручності пошуку.</li>
-                <li><strong>Система рейтингів та відгуків:</strong> Користувачі можуть оцінювати місця та залишати
-                    відгуки.</li>
+                <li><strong>{{ __('about.explore_cities_title') }}</strong> {{ __('about.explore_cities_description') }}
+                </li>
+                <li><strong>{{ __('about.add_places_title') }}</strong> {{ __('about.add_places_description') }}</li>
+                <li><strong>{{ __('about.support_local_businesses_title') }}</strong>
+                    {{ __('about.support_local_businesses_description') }}</li>
+                <li><strong>{{ __('about.interactive_map_title') }}</strong>
+                    {{ __('about.interactive_map_description') }}</li>
+                <li><strong>{{ __('about.ratings_reviews_title') }}</strong>
+                    {{ __('about.ratings_reviews_description') }}</li>
             </ul>
         </div>
 

@@ -1,8 +1,8 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between">
-            <div class="flex items-center gap-3">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center">
+            <div class="flex flex-grow items-center gap-3">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center p-2">
                     <a href="{{ UrlHelper::localizedRoute('home') }}">
@@ -13,16 +13,16 @@
                 {{-- Navigation Links --}}
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
                     <x-nav-link :href="UrlHelper::localizedRoute('about')" :active="request()->routeIs('about')">
-                        {{ __('Про нас') }}
+                        {{ __('nav.about_us') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
                     <x-nav-link :href="UrlHelper::localizedRoute('contact')" :active="request()->routeIs('contact')">
-                        {{ __('Контакти') }}
+                        {{ __('nav.contact') }}
                     </x-nav-link>
                 </div>
 
-                <div class='relative z-50'>
+                <div class='relative z-50 flex-grow'>
                     <x-search-input />
 
                     {{-- Search Results --}}
@@ -40,20 +40,20 @@
                             @auth
                                 <x-secondary-button>
                                     <a href="{{ url('/admin') }}">
-                                        Адмін
+                                        {{ __('nav.admin_panel') }}
                                     </a>
                                 </x-secondary-button>
                             @else
                                 <x-primary-button>
                                     <a href="{{ UrlHelper::localizedRoute('login') }}">
-                                        Увійти
+                                        {{ __('auth.sign_in') }}
                                     </a>
                                 </x-primary-button>
 
                                 @if (Route::has('register'))
                                     <x-secondary-button>
                                         <a href="{{ UrlHelper::localizedRoute('register') }}">
-                                            Зареєструватися
+                                            {{ __('auth.register') }}
                                         </a>
                                     </x-secondary-button>
                                 @endif
@@ -67,7 +67,7 @@
                         class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                         <span
                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-                            Додати нове місце
+                            {{ __('nav.add_location') }}
                         </span>
                     </a>
                     <!-- Settings Dropdown -->
@@ -75,8 +75,8 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                    <div>{{ Auth::user()?->name ?? 'Login' }}</div>
+                                    class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+                                    <div>{{ Auth::user()?->name ?? __('auth.sign_in') }}</div>
 
                                     <div class="ms-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="UrlHelper::localizedRoute('profile.edit')">
-                                    {{ __('Профіль') }}
+                                    {{ __('nav.profile') }}
                                 </x-dropdown-link>
 
 
@@ -104,7 +104,7 @@
                                     <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                        {{ __('auth.log_out') }}
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
@@ -112,6 +112,7 @@
                     </div>
                 @endif
                 <x-theme-toggle />
+                <x-language-toggle />
             </div>
 
 
@@ -152,7 +153,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('nav.profile') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -162,7 +163,7 @@
                     <x-responsive-nav-link :href="UrlHelper::localizedRoute('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('auth.log_out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

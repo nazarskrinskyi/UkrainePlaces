@@ -1,13 +1,14 @@
 @php
     $formatter = new IntlDateFormatter(
-        'uk_UA',
+        app()->getLocale(),
         IntlDateFormatter::FULL,
         IntlDateFormatter::NONE,
         'Europe/Kiev',
         IntlDateFormatter::GREGORIAN,
         'd MMMM yyyy',
     );
-    $isMobile = request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'));
+    $isMobile =
+        request()->header('User-Agent') && preg_match('/Mobile|Android|iPhone/', request()->header('User-Agent'));
 @endphp
 
 
@@ -34,10 +35,12 @@
                 <div id="map" class="w-full h-full grow"></div>
                 <div class='w-full flex '>
                     <div class="w-1/2">
-                        <p class="text-gray-800 dark:text-gray-200 text-center">Широта: {{ $location->latitude }}</p>
+                        <p class="text-gray-800 dark:text-gray-200 text-center">{{ __('location.latitude') }}:
+                            {{ $location->latitude }}</p>
                     </div>
                     <div class="w-1/2">
-                        <p class="text-gray-800 dark:text-gray-200 text-center">Довгота: {{ $location->longitude }}</p>
+                        <p class="text-gray-800 dark:text-gray-200 text-center">{{ __('location.longitude') }}:
+                            {{ $location->longitude }}</p>
                     </div>
 
                 </div>
@@ -46,13 +49,14 @@
 
         <!-- Description -->
         <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md overflow-hidden ">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Опис</h2>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{{ __('location.description') }}
+            </h2>
             <div
                 class="ck-content text-gray-800 dark:text-gray-200 break-words border border-gray-400 dark:border-gray-600 p-4 rounded-lg">
                 {!! $location->description !!}</div>
         </div>
         <div class="flex justify-between text-md text-gray-600 dark:text-gray-300">
-            <span>Автор: {{ $user_name }}</span>
+            <span>{{ __('location.author') }} {{ $user_name }}</span>
             @if (Auth::user() && Auth::user()->id == $location->user_id)
                 <div class="space-x-4">
                     <x-secondary-button class="hover:underline"><a
@@ -64,11 +68,12 @@
         <!-- Comments -->
         <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-lg shadow-md">
             @auth
-                <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Залиште свій відгук</h2>
+                <h2 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{{ __('location.leave_review') }}
+                </h2>
                 <form method="POST" action="{{ UrlHelper::localizedRoute('review.create') }}"
                     class="space-y-4 mb-4 border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 p-2">
                     @csrf
-                    <textarea name="comment" placeholder="Ваш відгук..."
+                    <textarea name="comment" placeholder="{{ __('location.your_review') }}"
                         class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2"></textarea>
 
                     <!-- Контейнер для зірок -->
@@ -93,8 +98,7 @@
                         </div>
 
                         <x-primary-button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">Залишити
-                            відгук</x-primary-button>
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">{{ __('location.leave_review') }}</x-primary-button>
                     </div>
                 </form>
             @endauth
@@ -141,9 +145,9 @@
             @endif
         </script>
 
-        @if($isMobile)
+        @if ($isMobile)
             <a href="{{ UrlHelper::localizedRoute('location.navigate', ['id' => $location->id]) }}"
-               class="mobile-map-button mobile-only">
+                class="mobile-map-button mobile-only">
                 📍 Прокласти маршрут
             </a>
         @endif
