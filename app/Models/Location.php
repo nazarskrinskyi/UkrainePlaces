@@ -5,9 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property mixed $translations
+ */
 class Location extends Model
 {
+    use HasTranslations;
+
+    public array $translatable = ['name', 'description'];
+
     protected $fillable = [
         'name',
         'description',
@@ -34,6 +42,17 @@ class Location extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function translations(): HasMany
+    {
+        return $this->hasMany(LocationTranslation::class);
+    }
+
+    public function translate($locale = null)
+    {
+        $locale = $locale ?: app()->getLocale();
+        return $this->translations->where('locale', $locale)->first();
     }
 }
 
