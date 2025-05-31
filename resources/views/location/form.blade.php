@@ -4,9 +4,8 @@
             {{ isset($location) ? __('location.edit_title') : __('location.create_title') }}
         </h2>
 
-
         <form
-            action="{{ isset($location) ? UrlHelper::localizedRoute('location.update', $location) : UrlHelper::localizedRoute('location.store') }}"
+            action="{{ isset($location) ? UrlHelper::localizedRoute('location.update', $location->id) : UrlHelper::localizedRoute('location.store') }}"
             method="POST" enctype="multipart/form-data" class="space-y-6" id="location">
             @csrf
             @if (isset($location))
