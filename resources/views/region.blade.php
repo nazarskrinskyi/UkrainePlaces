@@ -18,10 +18,10 @@
 
         <!-- List of locations -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        @if (count($locations) == 0)
+            @if (count($locations) == 0)
                 <div
                     class='w-full col-span-4 flex items-center justify-center h-48 text-center text-xl font-semibold text-gray-800 dark:text-gray-200 '>
-                    Локацій в області відсутні
+                    {{ __('region.no_locations') }}
                 </div>
             @else
                 @foreach ($locations as $location)

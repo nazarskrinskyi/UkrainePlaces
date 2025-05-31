@@ -7,10 +7,10 @@
 
 @php
     $translations = [
-        'rating' => 'Рейтинг',
-        'created_at' => 'Дата створення',
-        'asc' => ' (за зростанням)',
-        'desc' => ' (за спаданням)',
+        'rating' => __('region.rating'),
+        'created_at' => __('region.created_at'),
+        'asc' => __('region.asc'),
+        'desc' => __('region.desc'),
     ];
 
 @endphp
@@ -24,7 +24,7 @@
 </button>
 
 <!-- Dropdown menu -->
-<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700">
     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
         @foreach ($options as $option)
             @php
