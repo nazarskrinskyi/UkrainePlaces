@@ -9,7 +9,7 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
-        $locale = $request->segment(1);
+        $locale = $request->query('lang');
 
         if (in_array($locale, ['en', 'uk'])) {
             App::setLocale($locale);

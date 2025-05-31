@@ -48,8 +48,8 @@ class LocationController extends Controller
         DB::transaction(function () use ($validated, $request, &$location) {
             $location = Location::create($validated + ['user_id' => auth()->id()]);
 
-            if ($request->has('translations')) {
-                foreach ($request->input('translations') as $locale => $data) {
+            if (!empty($validated['translations'])) {
+                foreach ($validated['translations'] as $locale => $data) {
                     $location->translations()->create([
                         'location_id' => $location->id,
                         'locale' => $locale,
@@ -146,20 +146,22 @@ class LocationController extends Controller
 
         $location->update($validated);
 
-        DB::transaction(function () use ($location, $validated, $request) {
-            if ($request->has('translations')) {
-                foreach ($request->input('translations') as $locale => $data) {
-                    $location->translations()->updateOrCreate([
-                        'locale' => $locale,
-                        'name' => $data['name'] ?? '',
-                        'description' => $data['description'] ?? '',
-                    ]);
+        DB::transaction(function () use ($location, $validated) {
+            if (!empty($validated['translations'])) {
+                foreach ($validated['translations'] as $locale => $data) {
+                    $location->translations()->updateOrCreate(
+                        ['locale' => $locale],
+                        [
+                            'name' => $data['name'],
+                            'description' => $data['description'] ?? '',
+                        ]
+                    );
                 }
             }
         });
 
         return redirect()->route('location.show', ['id' => $location->id])
-            ->with('success', 'Location updated successfully.');
+            ->with('success', 'Локацію успішно оновлено.');
     }
 
     public function destroy($id): RedirectResponse

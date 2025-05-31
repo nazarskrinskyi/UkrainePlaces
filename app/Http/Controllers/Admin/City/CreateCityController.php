@@ -20,21 +20,22 @@ class CreateCityController
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name.*' => 'required|string|max:255',
+            'translations.uk.name' => 'required|string|max:255',
+            'translations.en.name' => 'required|string|max:255',
             'code' => 'nullable|string',
             'coordinates' => 'nullable|string',
         ]);
 
         $city = City::create([
-            'code' => $request->get('code'),
-            'coordinates' => $request->get('coordinates'),
+            'code' => $validated['code'],
+            'coordinates' => $validated['coordinates'],
         ]);
 
-        foreach ($validated['name'] as $locale => $translatedName) {
+        foreach ($validated['translations'] as $locale => $translation) {
             $city->translations()->create([
                 'city_id' => $city->id,
                 'locale' => $locale,
-                'name' => $translatedName,
+                'name' => $translation['name'],
             ]);
         }
 

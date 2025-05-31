@@ -26,7 +26,7 @@
                 @foreach($cities as $city)
                     <tr>
                         <td>{{ $city->id }}</td>
-                        <td>{{ $city->name }}</td>
+                        <td>{{ $city?->getTranslatedName(app()->getLocale()) }}</td>
                         <td>{{ $city->code }}</td>
                         <td class="text-end">
                             <a href="{{ UrlHelper::localizedRoute('admin.city.edit', $city->id) }}" class="btn btn-sm btn-warning">Edit</a>

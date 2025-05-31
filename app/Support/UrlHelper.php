@@ -16,24 +16,9 @@ class UrlHelper
         $defaultLocale = 'uk';
 
         if ($locale !== $defaultLocale) {
-            $parameters['locale'] = $locale;
+            $parameters['lang'] = $locale;
         }
 
-        $url = route($name, $parameters, $absolute);
-        $parsed = parse_url($url);
-
-        $scheme = $parsed['scheme'] ?? 'http';
-        $host = $parsed['host'] ?? request()->getHost();
-        $port = isset($parsed['port']) ? ':' . $parsed['port'] : '';
-        $query = isset($parsed['query']) ? '?' . $parsed['query'] : '';
-        $path = $parsed['path'] ?? '';
-
-        if ($locale !== $defaultLocale && !str_starts_with($path, "/$locale/")) {
-            $path = str_replace('en/en', 'en', '/' . $locale . '/' . ltrim($path, '/'));
-        }
-
-        $path = preg_replace('#/+#', '/', $path);
-
-        return "$scheme://$host$port$path$query";
+        return route($name, $parameters, $absolute);
     }
 }

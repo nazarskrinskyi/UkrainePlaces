@@ -10,6 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @property mixed $translations
+ * @method static findOrFail($id)
  */
 class City extends Model
 {
@@ -21,6 +22,11 @@ class City extends Model
     public function locations(): HasMany
     {
         return $this->hasMany(Location::class);
+    }
+
+    public function getTranslatedName(string $locale): ?string
+    {
+        return $this->translations()->firstWhere('locale', $locale)?->name;
     }
 
     public function translations(): HasMany

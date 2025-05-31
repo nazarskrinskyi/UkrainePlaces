@@ -5,7 +5,7 @@
         </h2>
 
 
-        <form action="{{ isset($location) ? UrlHelper::localizedRoute('location.update', $location) : UrlHelper::localizedRoute('location.store') }}"
+        <form action="{{ isset($location) ? UrlHelper::localizedRoute('location.update', $location->id) : UrlHelper::localizedRoute('location.store') }}"
             method="POST" enctype="multipart/form-data" class="space-y-6" id="location">
             @csrf
             @if(isset($location))
@@ -18,26 +18,32 @@
                     value="{{ old('name', $location->name ?? '') }}" />
             </div>
 
-            <div>
-                <x-input-label for="editor">Опис:</x-input-label>
-                <x-text-input type="hidden" name="description" id="description"
-                    value="{{ old('description', $location->description ?? '') }}" />
-                <div id="editor"
-                    class="ck-content border rounded-lg p-2 min-h-[200px] border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm ">
-                    {!! old('description', $location->description ?? '') !!}
-                </div>
-            </div>
+            @php
+                $supportedLocales = ['en' => 'Англійською', 'uk' => 'Українською'];
+            @endphp
 
-            <div>
-                <x-input-label for="city_id">Місто:</x-input-label>
-                <select name="city_id" id="city_id"
-                    class="w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                    @foreach($cities as $city)
-                        <option value="{{ $city->id }}" {{ isset($location) && $location->city_id == $city->id ? 'selected' : '' }}>
-                            {{ $city->name }}
-                        </option>
-                    @endforeach
-                </select>
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-gray-700 dark:text-white">Переклади</h3>
+
+                @foreach($supportedLocales as $locale => $label)
+                    <div class="p-4 border rounded-lg dark:border-gray-700">
+                        <h4 class="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">{{ $label }}</h4>
+
+                        <div class="mb-4">
+                            <x-input-label for="translations_{{ $locale }}_name">Назва ({{ $locale }}):</x-input-label>
+                            <x-text-input class='w-full p-3' type="text" name="translations[{{ $locale }}][name]"
+                                          id="translations_{{ $locale }}_name"
+                                          value="{{ old("translations.$locale.name", $location?->getTranslation($locale)?->name ?? '') }}" />
+                        </div>
+
+                        <div class="mb-4">
+                            <x-input-label for="translations_{{ $locale }}_description">Опис ({{ $locale }}):</x-input-label>
+                            <x-text-input class='w-full p-3' type="text" name="translations[{{ $locale }}][description]"
+                                          id="translations_{{ $locale }}_description"
+                                          value="{{ old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') }}" />
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <x-text-input class='w-full' type="hidden" name="user_id" value="{{ auth()->id() }}" />

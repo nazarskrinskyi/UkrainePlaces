@@ -7,12 +7,9 @@ use App\Http\Controllers\Admin\City\EditCityController;
 use App\Http\Controllers\Admin\City\IndexCityController;
 use App\Http\Controllers\Admin\ContactUsController;
 
-Route::group([
-    'prefix' => '{locale?}',
-], function () {
-    require __DIR__ . '/localized.php';
-    require __DIR__ . '/auth.php';
-});
+require __DIR__ . '/localized.php';
+
+require __DIR__ . '/auth.php';
 
 // Admin panel routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {

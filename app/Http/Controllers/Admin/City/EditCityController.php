@@ -20,25 +20,27 @@ class EditCityController
     public function update(Request $request, $id): RedirectResponse
     {
         $validated = $request->validate([
-            'name.*' => 'required|string|max:255',
+            'translations.*.name' => 'required|string|max:255',
             'code' => 'nullable|string',
             'coordinates' => 'nullable|string',
         ]);
 
         $city = City::findOrFail($id);
+
         $city->update([
             'code' => $request->get('code'),
             'coordinates' => $request->get('coordinates'),
         ]);
 
-        foreach ($validated['name'] as $locale => $translatedName) {
+        foreach ($validated['translations'] as $locale => $data) {
             $city->translations()->updateOrCreate(
                 ['locale' => $locale],
-                ['name' => $translatedName]
+                ['name' => $data['name']]
             );
         }
 
-        return redirect()->route('admin.city.edit', ['id' => $id])
-            ->with('success', 'City updated successfully.');
+        return redirect()
+            ->route('admin.city.edit', ['id' => $id])
+            ->with('success', 'Місто успішно оновлено.');
     }
 }

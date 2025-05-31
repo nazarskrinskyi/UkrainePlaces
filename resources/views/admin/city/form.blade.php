@@ -12,7 +12,7 @@
             <h3 class="card-title">{{ isset($city) ? 'Редагувати місто' : 'Створити місто' }}</h3>
         </div>
 
-        <form action="{{ isset($city) ? UrlHelper::localizedRoute('admin.city.update', $city) : UrlHelper::localizedRoute('admin.city.store') }}" method="POST">
+        <form action="{{ isset($city) ? UrlHelper::localizedRoute('admin.city.update', $city->id) : UrlHelper::localizedRoute('admin.city.store') }}" method="POST">
             @csrf
             @if(isset($city))
                 @method('PUT')
@@ -20,18 +20,21 @@
 
             <div class="card-body">
 
-                <div class="form-group">
-                    <label for="name">Назва міста</label>
-                    <input type="text"
-                           name="name"
-                           id="name"
-                           value="{{ old('name', $city->name ?? '') }}"
-                           class="form-control @error('name') is-invalid @enderror"
-                           placeholder="Введіть назву міста">
-                    @error('name')
-                    <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Мультимовне поле "Назва міста" --}}
+                @foreach(['uk' => 'Українська', 'en' => 'English'] as $locale => $label)
+                    <div class="form-group">
+                        <label for="name_{{ $locale }}">Назва міста ({{ $label }})</label>
+                        <input type="text"
+                               name="translations[{{ $locale }}][name]"
+                               id="name_{{ $locale }}"
+                               value="{{ old("translations.$locale.name", $city?->getTranslatedName($locale) ?? '') }}"
+                               class="form-control @error("translations.$locale.name") is-invalid @enderror"
+                               placeholder="Введіть назву міста ({{ $label }})">
+                        @error("translations.$locale.name")
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                @endforeach
 
                 <div class="form-group">
                     <label for="code">Код міста</label>
@@ -47,12 +50,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="code">Координати міста</label>
-                    <textarea type="text"
-                           name="coordinates"
-                           id="coordinates"
-                           class="form-control @error('coordinates') is-invalid @enderror"
-                           placeholder="Введіть координати міста">{{ old('coordinates', $city->coordinates ?? '') }}</textarea>
+                    <label for="coordinates">Координати міста</label>
+                    <textarea name="coordinates"
+                              id="coordinates"
+                              class="form-control @error('coordinates') is-invalid @enderror"
+                              placeholder="Введіть координати міста">{{ old('coordinates', $city->coordinates ?? '') }}</textarea>
                     @error('coordinates')
                     <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
@@ -66,5 +68,4 @@
             </div>
         </form>
     </div>
-
 @endsection
