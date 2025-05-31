@@ -29,7 +29,7 @@ class UrlHelper
         $path = $parsed['path'] ?? '';
 
         if ($locale !== $defaultLocale && !str_starts_with($path, "/$locale/")) {
-            $path = '/' . $locale . '/' . ltrim($path, '/');
+            $path = str_replace('en/en', 'en', '/' . $locale . '/' . ltrim($path, '/'));
         }
 
         $path = preg_replace('#/+#', '/', $path);

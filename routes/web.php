@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\ContactUsController;
 
 Route::group([
     'prefix' => '{locale?}',
-    'where' => ['locale' => 'en|uk'],
 ], function () {
     require __DIR__ . '/localized.php';
     require __DIR__ . '/auth.php';
