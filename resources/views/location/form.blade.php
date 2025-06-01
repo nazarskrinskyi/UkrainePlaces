@@ -45,10 +45,10 @@
                                 Назва ({{ strtoupper($locale) }}):
                             </x-input-label>
 
-                            <x-text-input class='w-full p-3 @error("translations.$locale.name") is-invalid @enderror' type="text"
+                            <input class='w-full p-3 @error("translations.$locale.name") is-invalid @enderror' type="text"
                                           name="translations[{{ $locale }}][name]"
                                           id="translations_{{ $locale }}_name"
-                                          placeholder="Введіть назву"> {{ old("translations.$locale.name", $location?->getTranslatedName($locale)) }} </x-text-input>
+                                          value="{{ old("translations.$locale.name", $location?->getTranslatedName($locale) ?? '') }}">
                             @error("translations.$locale.name")
                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                             @enderror
@@ -60,10 +60,10 @@
                             </x-input-label>
                             <input type="hidden" name="translations[{{ $locale }}][description]"
                                    id="translations_{{ $locale }}_description_input"
-                                   value="{{ old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') }}" />
+                                   value="{{ old("translations.$locale.description", $location?->getTranslatedDescription($locale) ?? '') }}" />
                             <div id="translations_{{ $locale }}_description_editor" class="editor"
                                  class="editor border rounded-lg p-2 min-h-[200px] dark:bg-gray-900 dark:text-gray-300 @error("translations.$locale.description") is-invalid @enderror">
-                                {!! old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') !!}
+                                {!! old("translations.$locale.description", $location?->getTranslatedDescription($locale) ?? '') !!}
                             </div>
                             @error("translations.$locale.description")
                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -97,7 +97,7 @@
                 <x-input-label for="image">{{ __('location.image') }}:</x-input-label>
                 <x-text-input class='w-full p-3 @error("image_path") is-invalid @enderror' type="file" name="image_path" id="image" />
                 @if (isset($location) && $location->image_path)
-                    <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover">
+                    <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover" alt="">
                 @endif
                 @error("image_path")
                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
