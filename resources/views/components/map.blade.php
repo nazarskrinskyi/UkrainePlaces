@@ -6,7 +6,7 @@
         height="408.0199">
         @foreach ($regions as $region)
             <path class="region {{ $selectedRegion && $region->code == $selectedRegion->code ? 'region-active' : '' }}"
-                d="{{ $region->coordinates }}" title="{{ $region->code }}" data-name="{{ $region->name }}"
+                d="{{ $region->coordinates }}" title="{{ $region->code }}" data-name="{{ $region->getTranslatedName(app()->getLocale()) }}"
                 id="{{ $region->code }}" />
         @endforeach
     </svg>

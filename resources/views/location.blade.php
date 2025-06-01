@@ -23,7 +23,7 @@
         </x-slot>
 
         <!-- Heading -->
-        <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">{{ $location->name }}</h1>
+        <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">{{ $location->getTranslatedName(app()->getLocale()) }}</h1>
 
         <!-- Image and Map -->
         <div class="flex gap-6">
@@ -53,7 +53,7 @@
             </h2>
             <div
                 class="ck-content text-gray-800 dark:text-gray-200 break-words border border-gray-400 dark:border-gray-600 p-4 rounded-lg">
-                {!! $location->description !!}</div>
+                {!! $location->getTranslatedDescription(app()->getLocale()) !!}</div>
         </div>
         <div class="flex justify-between text-md text-gray-600 dark:text-gray-300">
             <span>{{ __('location.author') }} {{ $user_name }}</span>

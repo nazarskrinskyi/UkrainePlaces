@@ -5,7 +5,7 @@
         <option selected>{{ __('nav.go_to_region') }}</option>
         @foreach ($regions as $region)
             <option value="{{ $region->code }}">
-                {{ $region->name }}
+                {{ $region->getTranslatedName(app()->getLocale()) }}
             </option>
         @endforeach
     </select>

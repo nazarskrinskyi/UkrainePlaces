@@ -33,7 +33,6 @@ class LocationController extends Controller
             'longitude' => 'required|numeric|between:-180,180',
             'city_id' => 'required|exists:cities,id',
             'image_path' => 'nullable|image|max:2048',
-            'translations' => 'nullable|array',
             'translations.*.name' => 'required_with:translations|string|max:255',
             'translations.*.description' => 'nullable|string',
         ]);

@@ -2,7 +2,7 @@
 
     <div class="flex flex-col gap-6 py-12 container mx-auto">
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ $region->name }}</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ $region->getTranslatedName(app()->getLocale()) }}</h2>
         </x-slot>
 
         <x-slot name="footer">
@@ -25,7 +25,7 @@
                 </div>
             @else
                 @foreach ($locations as $location)
-                    <x-location-card :image="asset('uploads/' . $location->image_path)" :id="$location->id" :title="$location->name" :rating="intval($location->avg_rating) == $location->avg_rating
+                    <x-location-card :image="asset('uploads/' . $location->image_path)" :id="$location->id" :title="$location->getTranslatedName(app()->getLocale())" :rating="intval($location->avg_rating) == $location->avg_rating
                         ? intval($location->avg_rating)
                         : number_format($location->avg_rating, 1)" />
                 @endforeach

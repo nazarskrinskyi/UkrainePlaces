@@ -6,14 +6,14 @@ namespace App\Support;
 
 class UrlHelper
 {
-    public static function localizedRoute(string $name, array|int $parameters = [], bool $absolute = true): string
+    public static function localizedRoute(string $name, mixed $parameters = [], bool $absolute = true): string
     {
-        if (is_int($parameters)) {
-            $parameters = ['id' => $parameters];
-        }
-
         $locale = app()->getLocale();
         $defaultLocale = 'uk';
+
+        if (!is_array($parameters)) {
+            $parameters = [$parameters];
+        }
 
         if ($locale !== $defaultLocale) {
             $parameters['lang'] = $locale;
@@ -21,4 +21,5 @@ class UrlHelper
 
         return route($name, $parameters, $absolute);
     }
+
 }

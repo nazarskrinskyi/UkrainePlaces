@@ -49,6 +49,16 @@ class Location extends Model
         return $this->hasMany(LocationTranslation::class);
     }
 
+    public function getTranslatedName(string $locale): ?string
+    {
+        return $this->translations()->firstWhere('locale', $locale)?->name;
+    }
+
+    public function getTranslatedDescription(string $locale): ?string
+    {
+        return $this->translations()->firstWhere('locale', $locale)?->description;
+    }
+
     public function translate($locale = null)
     {
         $locale = $locale ?: app()->getLocale();

@@ -25,7 +25,7 @@
             document.documentElement.classList.add("dark");
         }
     </script>
-
+    <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -53,6 +53,7 @@
             {{ $footer }}
         @endisset
     </div>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>

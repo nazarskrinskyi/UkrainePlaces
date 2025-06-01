@@ -234,11 +234,14 @@ const editorConfig = {
     },
 };
 
-ClassicEditor.create(document.querySelector("#editor"), editorConfig)
-    .then(editor => {
-        editor.model.document.on('change:data', () => {
-            console.log(editor.getData())
-            document.querySelector('#description').value = editor.getData();
-        });
-    })
-    .catch(error => console.error("CKEditor initialization error:", error));
+document.querySelectorAll(".editor").forEach((editorElement) => {
+    const hiddenInput = editorElement.previousElementSibling;
+
+    ClassicEditor.create(editorElement, editorConfig)
+        .then(editor => {
+            editor.model.document.on('change:data', () => {
+                hiddenInput.value = editor.getData();
+            });
+        })
+        .catch(error => console.error("CKEditor initialization error:", error));
+});

@@ -1,3 +1,8 @@
+@php
+    $supportedLocales = ['en' => 'Англійською', 'uk' => 'Українською'];
+    $location = $location ?? null;
+@endphp
+
 <x-app-layout>
     <div class="max-w-5xl mx-auto bg-white p-8 shadow-md rounded-lg dark:bg-gray-800">
         <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
@@ -13,38 +18,60 @@
             @endif
 
             <div>
-                <x-input-label for="name">{{ __('location.name') }}:</x-input-label>
-                <x-text-input class='w-full p-3' type="text" name="name" id="name"
-                    value="{{ old('name', $location->name ?? '') }}" />
+                <x-input-label for="city_id">{{ __('location.region') }}</x-input-label>
+                <select name="city_id" id="city_id"
+                        class="@error("city_id") is-invalid @enderror w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                    @foreach($cities as $city)
+                        <option value="{{ $city->id }}" {{ isset($location) && $location->city_id == $city->id ? 'selected' : '' }}>
+                            {{ $city->getTranslatedName(app()->getLocale()) }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
+            @error("city_id")
+                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+            @enderror
 
-            @php
-                $supportedLocales = ['en' => 'Англійською', 'uk' => 'Українською'];
-            @endphp
+            @foreach($supportedLocales as $locale => $language)
+                <div x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }" class="border rounded-lg dark:border-gray-700 mb-4">
+                    <button @click="open = !open" type="button"
+                            class="w-full px-4 py-3 text-left font-semibold text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-t-lg">
+                        {{ $language }}
+                    </button>
 
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-gray-700 dark:text-white">Переклади</h3>
-
-                @foreach($supportedLocales as $locale => $label)
-                    <div class="p-4 border rounded-lg dark:border-gray-700">
-                        <h4 class="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">{{ $label }}</h4>
-
+                    <div x-show="open" x-collapse class="p-4 bg-white dark:bg-gray-900">
                         <div class="mb-4">
-                            <x-input-label for="translations_{{ $locale }}_name">Назва ({{ $locale }}):</x-input-label>
-                            <x-text-input class='w-full p-3' type="text" name="translations[{{ $locale }}][name]"
+                            <x-input-label for="translations_{{ $locale }}_name">
+                                Назва ({{ strtoupper($locale) }}):
+                            </x-input-label>
+
+                            <x-text-input class='w-full p-3 @error("translations.$locale.name") is-invalid @enderror' type="text"
+                                          name="translations[{{ $locale }}][name]"
                                           id="translations_{{ $locale }}_name"
-                                          value="{{ old("translations.$locale.name", $location?->getTranslation($locale)?->name ?? '') }}" />
+                                          placeholder="Введіть назву"> {{ old("translations.$locale.name", $location?->getTranslatedName($locale)) }} </x-text-input>
+                            @error("translations.$locale.name")
+                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
-                            <x-input-label for="translations_{{ $locale }}_description">Опис ({{ $locale }}):</x-input-label>
-                            <x-text-input class='w-full p-3' type="text" name="translations[{{ $locale }}][description]"
-                                          id="translations_{{ $locale }}_description"
-                                          value="{{ old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') }}" />
+                            <x-input-label for="translations_{{ $locale }}_description">
+                                Опис ({{ strtoupper($locale) }}):
+                            </x-input-label>
+                            <input type="hidden" name="translations[{{ $locale }}][description]"
+                                   id="translations_{{ $locale }}_description_input"
+                                   value="{{ old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') }}" />
+                            <div id="translations_{{ $locale }}_description_editor" class="editor"
+                                 class="editor border rounded-lg p-2 min-h-[200px] dark:bg-gray-900 dark:text-gray-300 @error("translations.$locale.description") is-invalid @enderror">
+                                {!! old("translations.$locale.description", $location?->getTranslation($locale)?->description ?? '') !!}
+                            </div>
+                            @error("translations.$locale.description")
+                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
 
             <x-text-input class='w-full' type="hidden" name="user_id" value="{{ auth()->id() }}" />
 
@@ -68,10 +95,13 @@
 
             <div>
                 <x-input-label for="image">{{ __('location.image') }}:</x-input-label>
-                <x-text-input class='w-full p-3' type="file" name="image_path" id="image" />
+                <x-text-input class='w-full p-3 @error("image_path") is-invalid @enderror' type="file" name="image_path" id="image" />
                 @if (isset($location) && $location->image_path)
                     <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover">
                 @endif
+                @error("image_path")
+                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <x-primary-button type="submit" class='w-full flex justify-center py-3'>
