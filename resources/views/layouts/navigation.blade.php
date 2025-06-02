@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" id="navbar" class="w-full h-[var(--navbar-height)] z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-center">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
-                <header class=" items-center gap-2 lg:grid-cols-3 mr-3">
+                <div class="items-center lg:grid-cols-3 ">
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end gap-3">
                             @auth
@@ -60,7 +60,7 @@
                             @endauth
                         </nav>
                     @endif
-                </header>
+                </div>
                 <x-dropdown-select />
                 @if (Auth::user()?->name !== null)
                     <a href="{{ UrlHelper::localizedRoute('location.create') }}"
@@ -241,3 +241,46 @@
         }
     }
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.getElementById('navbar');
+        const main = document.querySelector('main');
+        const navbarHeightValue = getComputedStyle(document.documentElement)
+            .getPropertyValue('--navbar-height')
+            .trim();
+
+        const navbarHeight = parseInt(navbarHeightValue);
+
+        // bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700
+        // bg-gray-100 dark:bg-gray-900
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > navbarHeight) {
+                navbar.classList.add( 'fixed',
+                    'animate-[slideDown_0.3s_ease-out]');
+                // navbar.classList.remove('bg-white', 'dark:bg-gray-800');
+                navbar.style.height = 'auto';
+                main.style.paddingTop = navbarHeight + 'px';
+
+            } else {
+                navbar.classList.remove( 'fixed',
+                    'animate-[slideDown_0.3s_ease-out]');
+                // navbar.classList.add('bg-white', 'dark:bg-gray-800');
+                navbar.style.height = 'var(--navbar-height)';
+                main.style.paddingTop = '0';
+            }
+        });
+    });
+</script>
+
+<style>
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+</style>
