@@ -13,7 +13,14 @@
                 </li>
                 <li>
                     <a href="{{ UrlHelper::localizedRoute('contact') }}"
-                        class="hover:underline">{{ __('nav.contact') }}</a>
+                        class="hover:underline me-4 md:me-6">{{ __('nav.contact') }}</a>
+                </li>
+                <li>
+                    <x-secondary-button>
+                        <a href="{{ url('/admin') }}">
+                            {{ __('nav.admin_panel') }}
+                        </a>
+                    </x-secondary-button>
                 </li>
             </ul>
         </div>

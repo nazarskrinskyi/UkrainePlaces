@@ -11,7 +11,7 @@
                 </div>
 
                 {{-- Navigation Links --}}
-                <div class="hidden space-x-8 sm:-my-px sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:flex">
                     <x-nav-link :href="UrlHelper::localizedRoute('about')" :active="request()->routeIs('about')">
                         {{ __('nav.about_us') }}
                     </x-nav-link>
@@ -20,7 +20,7 @@
                     <x-nav-link :href="UrlHelper::localizedRoute('contact')" :active="request()->routeIs('contact')">
                         {{ __('nav.contact') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
 
                 <div class='relative z-50 flex-grow'>
                     <x-search-input />
@@ -38,11 +38,6 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end gap-3">
                             @auth
-                                <x-secondary-button>
-                                    <a href="{{ url('/admin') }}">
-                                        {{ __('nav.admin_panel') }}
-                                    </a>
-                                </x-secondary-button>
                             @else
                                 <x-primary-button>
                                     <a href="{{ UrlHelper::localizedRoute('login') }}">
