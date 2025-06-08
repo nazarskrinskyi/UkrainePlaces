@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('location_translations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
-            $table->string('locale')->index(); // 'en' or 'uk'
+            $table->string('locale')->index();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();

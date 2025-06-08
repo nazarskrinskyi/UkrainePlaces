@@ -1,6 +1,7 @@
 @php
-    $supportedLocales = ['en' => 'Англійською', 'uk' => 'Українською'];
     $location = $location ?? null;
+    $locale = app()->getLocale();
+    $supportedLocales = ['en' => $locale === 'en' ? 'English' : 'Англійською', 'uk' => $locale === 'en' ? 'Ukrainian' : 'Українською'];
 @endphp
 
 <x-app-layout>
@@ -47,12 +48,12 @@
 
                             <x-text-input
                             class="w-full p-3"
-                            type="text" 
+                            type="text"
                             id="translations_{{ $locale }}_name"
                             name="translations[{{ $locale }}][name]"
                             value='{{ old("translations.$locale.name", $location?->getTranslatedName($locale) ?? "") }}'
                             />
-                            
+
                             @error("translations.$locale.name")
                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                             @enderror

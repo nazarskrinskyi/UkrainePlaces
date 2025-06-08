@@ -10,11 +10,10 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\CityController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 Route::get('/about', fn() => view('about'))->name('about');
 Route::get('/contact', fn() => view('contact'))->name('contact');
+
 Route::get('/region/{city}', [LocationController::class, 'showByCity'])->name('location.index');
-Route::get('/dashboard', fn() => view('dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -23,6 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/ckeditor/upload', [CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
+
 Route::post('/send/contact-us', [ContactUsController::class, 'store'])->name('contact-us.upload');
 
 // Locations

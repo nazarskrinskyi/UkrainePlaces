@@ -6,7 +6,9 @@ namespace App\Support;
 
 class UrlHelper
 {
-    public static function localizedRoute(string $name, mixed $parameters = [], bool $absolute = true): string
+    public static function localizedRoute(string $name,
+                                          mixed $parameters = [],
+                                          bool $absolute = true): string
     {
         $locale = app()->getLocale();
         $defaultLocale = 'uk';
