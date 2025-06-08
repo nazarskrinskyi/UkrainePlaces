@@ -1,7 +1,10 @@
 @php
     $location = $location ?? null;
     $locale = app()->getLocale();
-    $supportedLocales = ['en' => $locale === 'en' ? 'English' : 'Англійською', 'uk' => $locale === 'en' ? 'Ukrainian' : 'Українською'];
+    $supportedLocales = [
+        'en' => $locale === 'en' ? 'English' : 'Англійською',
+        'uk' => $locale === 'en' ? 'Ukrainian' : 'Українською',
+    ];
 @endphp
 
 <x-app-layout>
@@ -21,38 +24,37 @@
             <div>
                 <x-input-label for="city_id">{{ __('location.region') }}</x-input-label>
                 <select name="city_id" id="city_id"
-                        class="@error("city_id") is-invalid @enderror w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                    @foreach($cities as $city)
-                        <option value="{{ $city->id }}" {{ isset($location) && $location->city_id == $city->id ? 'selected' : '' }}>
+                    class="@error('city_id') is-invalid @enderror w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                    @foreach ($cities as $city)
+                        <option value="{{ $city->id }}"
+                            {{ isset($location) && $location->city_id == $city->id ? 'selected' : '' }}>
                             {{ $city->getTranslatedName(app()->getLocale()) }}
                         </option>
                     @endforeach
                 </select>
             </div>
-            @error("city_id")
+            @error('city_id')
                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
             @enderror
 
-            @foreach($supportedLocales as $locale => $language)
+            @foreach ($supportedLocales as $locale => $language)
                 <div x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }" class="border rounded-lg dark:border-gray-700 mb-4">
                     <button @click="open = !open" type="button"
-                            class="w-full px-4 py-3 text-left font-semibold text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-t-lg">
+                        class="w-full px-4 py-3 text-left font-semibold text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-t-lg">
                         {{ $language }}
                     </button>
 
                     <div x-show="open" x-collapse class="p-4 bg-white dark:bg-gray-900">
                         <div class="mb-4">
                             <x-input-label for="translations_{{ $locale }}_name">
-                                {{__('location.name')}} ({{ strtoupper($locale) }}):
+                                {{ __('location.name') }} ({{ strtoupper($locale) }}):
                             </x-input-label>
 
-                            <x-text-input
-                            class="w-full p-3"
-                            type="text"
-                            id="translations_{{ $locale }}_name"
-                            name="translations[{{ $locale }}][name]"
-                            value='{{ old("translations.$locale.name", $location?->getTranslatedName($locale) ?? "") }}'
-                            />
+                            <input
+                                class="w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                type="text" id="translations_{{ $locale }}_name"
+                                name="translations[{{ $locale }}][name]"
+                                value='{{ old("translations.$locale.name", $location?->getTranslatedName($locale) ?? '') }}' />
 
                             @error("translations.$locale.name")
                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -61,13 +63,13 @@
 
                         <div class="mb-4">
                             <x-input-label for="translations_{{ $locale }}_description">
-                                {{__('location.description')}} ({{ strtoupper($locale) }}):
+                                {{ __('location.description') }} ({{ strtoupper($locale) }}):
                             </x-input-label>
-                            <x-text-input type="hidden" name="translations[{{ $locale }}][description]"
-                                   id="translations_{{ $locale }}_description_input"
-                                   value='{{ old("translations.$locale.description", $location?->getTranslatedDescription($locale) ?? '') }}' />
+                            <input type="hidden" name="translations[{{ $locale }}][description]"
+                                id="translations_{{ $locale }}_description_input"
+                                value='{{ old("translations.$locale.description", $location?->getTranslatedDescription($locale) ?? '') }}' />
                             <div id="translations_{{ $locale }}_description_editor"
-                                 class="editor border rounded-lg p-2 min-h-[200px] dark:bg-gray-900 dark:text-gray-300 @error("translations.$locale.description") is-invalid @enderror">
+                                class="editor border rounded-lg p-2 min-h-[200px] dark:bg-gray-900 dark:text-gray-300 @error("translations.$locale.description") is-invalid @enderror">
                                 {!! old("translations.$locale.description", $location?->getTranslatedDescription($locale) ?? '') !!}
                             </div>
                             @error("translations.$locale.description")
@@ -100,12 +102,15 @@
 
             <div>
                 <x-input-label for="image">{{ __('location.image') }}:</x-input-label>
-                <x-text-input class='w-full p-3 @error("image_path") is-invalid @enderror' type="file" name="image_path" id="image" />
+                <input
+                    class='w-full p-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm @error('image_path') is-invalid @enderror'
+                    type="file" name="image_path" id="image" />
                 @if (isset($location) && $location->image_path)
-                    <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover" alt="">
+                    <img src="{{ asset('uploads/' . $location->image_path) }}" class="mt-3 h-32 w-32 object-cover"
+                        alt="">
                 @endif
-                @error("image_path")
-                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @error('image_path')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
