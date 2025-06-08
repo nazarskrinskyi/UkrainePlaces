@@ -235,7 +235,13 @@ const editorConfig = {
 };
 
 document.querySelectorAll(".editor").forEach((editorElement) => {
-    const hiddenInput = editorElement.previousElementSibling;
+    const hiddenInputId = editorElement.id.replace('_editor', '_input');
+    const hiddenInput = document.getElementById(hiddenInputId);
+
+    if (!hiddenInput) {
+        console.error("Hidden input not found for editor:", editorElement);
+        return;
+    }
 
     ClassicEditor.create(editorElement, editorConfig)
         .then(editor => {
